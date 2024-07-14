@@ -1,0 +1,26 @@
+version: "3.12"
+name: birdsite
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./images/backend/Dockerfile
+    volumes:
+      - ./srv/backend:/srv/backend/
+    ports:
+      - '5000:5000'
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./images/frontend/Dockerfile
+    volumes:
+      - ./srv/frontend:/srv/frontend
+    ports:
+      - '3000:3000'
+    tty: true
+    command: sh -c "yarn --cwd /srv/frontend start"
+    deploy:
+      resources:
+        reservations:
+          memory: 500M
