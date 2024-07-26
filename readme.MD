@@ -4,3 +4,7 @@ Quiz
       1. latin_name
       2. asd
             
+
+docker-compose build backend
+
+docker-compose up backend -d

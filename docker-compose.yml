@@ -1,4 +1,4 @@
-version: "3.12"
+version: "1.0"
 name: birdsite
 services:
   backend:
