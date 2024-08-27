@@ -34,6 +34,11 @@ def get_bird_by_id(
         return 404, {"message": f"Bird with name: {bird_latin_name} doesn't exist"}
 
 
+@router.get("/all_birds", response={200: list[BirdSchema], 404: Error})
+def get_all_birds():
+    return (200, models.Bird.objects.all())
+
+
 class UpdateResponse(Schema):
     message: str
 
