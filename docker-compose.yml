@@ -15,11 +15,10 @@ services:
       context: .
       dockerfile: ./images/frontend/Dockerfile
     volumes:
-      - ./srv/frontend:/srv/frontend
+      - ./srv/frontend/bird-site:/srv/frontend/bird-site
     ports:
       - '3000:3000'
     tty: true
-    command: sh -c "yarn --cwd /srv/frontend start"
     deploy:
       resources:
         reservations:

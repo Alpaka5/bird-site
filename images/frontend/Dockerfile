@@ -1,4 +1,7 @@
 FROM node:lts-alpine
-WORKDIR /srv/frontend
-COPY srv/frontend/package.json srv/frontend/package-lock.json /srv/frontend/
-RUN yarn install
+WORKDIR /srv/frontend/bird-site
+
+EXPOSE 3000
+
+ENTRYPOINT ["sh", "-c"]
+CMD ["yarn dev -d"]
