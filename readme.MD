@@ -8,3 +8,5 @@ Quiz
 docker-compose build backend
 
 docker-compose up backend -d
+
+yarn install

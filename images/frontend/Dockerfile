@@ -4,4 +4,4 @@ WORKDIR /srv/frontend/bird-site
 EXPOSE 3000
 
 ENTRYPOINT ["sh", "-c"]
-CMD ["yarn dev -d"]
+CMD ["npm" ,"run", "dev"]

@@ -2,8 +2,9 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import './index.css'
 
-function App() {
+function OldApp() {
   const [count, setCount] = useState(0)
 
   return (
@@ -21,7 +22,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
+        <p className="flex-col ">
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
@@ -32,4 +33,4 @@ function App() {
   )
 }
 
-export default App
+export default OldApp
