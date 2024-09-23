@@ -51,5 +51,7 @@ export default tseslint.config({
 
 npx shadcn@latest add table
 npm install @tanstack/react-table
+npm i @tanstack/react-query
+npm install axios
 npx shadcn@latest add command
-
+npx shadcn@latest add button

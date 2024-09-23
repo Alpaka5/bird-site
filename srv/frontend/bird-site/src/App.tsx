@@ -1,35 +1,40 @@
-import {useState} from 'react'
+import {useState, createContext, useContext} from 'react'
 
 import './App.css'
 import './styles/base.css'
 import MainCommandMenu from './components/maincommandmenu.tsx'
 import QuizWindow from './components/quizWindow.tsx'
 import LibraryWindow from './components/libraryWindow.tsx'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import BirdDescriptionWindow from "./components/birdDescriptionWindow.tsx";
 
-function MainWindow({windowToRender}: {windowToRender: any}) {
+export const SetMainWindowContext = createContext(() => {
+});
 
-    return (
-        <div>
-            {windowToRender === "quizWindow" ? (
-                <QuizWindow/>
-            ) : windowToRender === "libraryWindow" ? (
-                <LibraryWindow/>
-            ) : (
-                "Page not found!"
-            )}
-        </div>
-    )
-}
 
 function App() {
-    const [mainWindowState, setMainWindowState] = useState("quizWindow");
+    const [mainWindowState, setMainWindowState] = useState(<QuizWindow/>);
+    const [queryClient] = useState(
+        () =>
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        staleTime: 60 * 1000,
+                    }
+                }
+            })
+    );
+
     return (
         <>
-
-            <div className="main-grid">
-                <MainCommandMenu setMainWindowState={setMainWindowState}/>
-                <MainWindow windowToRender={mainWindowState}/>
-            </div>
+            <QueryClientProvider client={queryClient}>
+                <div className="main-grid">
+                    <SetMainWindowContext.Provider value={setMainWindowState}>
+                        <MainCommandMenu/>
+                        {mainWindowState}
+                    </SetMainWindowContext.Provider>
+                </div>
+            </QueryClientProvider>
         </>
     )
 }

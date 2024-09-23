@@ -1,42 +1,35 @@
-import {BirdEntry, columns} from "./birds/columns.tsx";
+import {columns} from "./birds/columns.tsx";
 import {DataTable} from "./birds/data-table.tsx";
-import {useState, useEffect} from "react";
-
-async function getData(): Promise<BirdEntry[]> {
-    return [
-        {
-            latin_name: "Bird 1",
-            family: "Family 1",
-            length_min_mm: 1,
-            length_max_mm: 1,
-            weight_min_g: 1,
-            weight_max_g: 1,
-        },
-        {
-            latin_name: "Bird 2",
-            family: "Family 2",
-            length_min_mm: 2,
-            length_max_mm: 2,
-            weight_min_g: 2,
-            weight_max_g: 2,
-        },
-    ]
-}
+import {useQuery} from '@tanstack/react-query';
+import axios from 'axios';
 
 export default function LibraryWindow() {
-    const [birdLibraryData, setBirdLibraryData] = useState<BirdEntry[]>([])
+    // const [birdLibraryData, setBirdLibraryData] = useState<BirdEntry[]>([])
+    //
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const data = await getData()
+    //         setBirdLibraryData(data)
+    //     }
+    //     fetchData()
+    // }, []);
 
-    useEffect(() => {
-        async function fetchData() {
-            const data = await getData()
-            setBirdLibraryData(data)
+    const postQuery = useQuery({
+        queryKey: ['birds_data'],
+        queryFn: async () => {
+            const response = await axios.get('http://localhost:5000/api/birds/all_birds');
+            const data = await response.data;
+            return data;
         }
-        fetchData()
-    }, []);
+    });
+
+    if (postQuery.isLoading) return <h1>Loading....</h1>;
+    if (postQuery.isError) return <h1>Error loading data!!!</h1>;
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable columns={columns} data={birdLibraryData}/>
+
+            <DataTable columns={columns} data={postQuery.data}/>
         </div>
     )
 }

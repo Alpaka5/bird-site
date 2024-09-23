@@ -1,3 +1,4 @@
+import logging
 from urllib.request import Request
 
 from ninja import Router, ModelSchema, Schema, File
@@ -19,6 +20,12 @@ class BirdSchema(ModelSchema):
         fields = "__all__"
 
 
+class BirdDescriptionSchema(ModelSchema):
+    class Meta:
+        model = models.BirdTextField
+        fields = "__all__"
+
+
 class Error(Schema):
     message: str
 
@@ -35,8 +42,28 @@ def get_bird_by_id(
 
 
 @router.get("/all_birds", response={200: list[BirdSchema], 404: Error})
-def get_all_birds():
+def get_all_birds(request):
+    logging.info("DOWNLOADING BIRDS DATA")
     return (200, models.Bird.objects.all())
+
+
+@router.get(
+    "/description/{bird_latin_name}/{language_id}",
+    response={200: BirdDescriptionSchema, 404: Error},
+)
+def get_bird_description(request, bird_latin_name: str, language_id: str):
+    logging.info(f"Fetching {bird_latin_name} description")
+    languages = list(models.Language.objects.all().values_list(flat=True))
+    if language_id not in languages:
+        return (
+            404,
+            {"message": f"Language {language_id} not found, use one of {languages}"},
+        )
+    fetched_bird = models.BirdTextField.objects.get(
+        bird_id=bird_latin_name, language_id=language_id
+    )
+    logging.info(fetched_bird)
+    return (200, fetched_bird)
 
 
 class UpdateResponse(Schema):

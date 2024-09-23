@@ -9,7 +9,8 @@ services:
       - ./srv/backend:/srv/backend/
     ports:
       - '5000:5000'
-
+    networks:
+      - bird_site_network
   frontend:
     build:
       context: .
@@ -23,3 +24,9 @@ services:
       resources:
         reservations:
           memory: 500M
+    networks:
+      - bird_site_network
+
+networks:
+  bird_site_network:
+    driver: bridge
