@@ -2,3 +2,13 @@
     display: grid;
     grid-template-columns: 1fr 10fr;
 }
+
+.bird-description-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+.bird-description-panel {
+    grid-column: span 2;
+}

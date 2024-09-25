@@ -59,9 +59,19 @@ def get_bird_description(request, bird_latin_name: str, language_id: str):
             404,
             {"message": f"Language {language_id} not found, use one of {languages}"},
         )
-    fetched_bird = models.BirdTextField.objects.get(
-        bird_id=bird_latin_name, language_id=language_id
-    )
+    try:
+        fetched_bird = models.BirdTextField.objects.get(
+            bird_id=bird_latin_name, language_id=language_id
+        )
+    except models.BirdTextField.DoesNotExist as err:
+        return (
+            200,
+            {
+                "bird_id": bird_latin_name,
+                "language_id": language_id,
+                "description": f"Temporary description generated for {bird_latin_name} because I was lazy for now",
+            },
+        )
     logging.info(fetched_bird)
     return (200, fetched_bird)
 

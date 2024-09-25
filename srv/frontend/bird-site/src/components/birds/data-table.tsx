@@ -3,7 +3,7 @@ import {
     flexRender,
     getCoreRowModel,
     useReactTable,
-    getPaginationRowModel
+    getPaginationRowModel, Row
 } from "@tanstack/react-table"
 
 import {Button} from "@/components/ui/button"
@@ -19,10 +19,17 @@ import {
 import {useContext} from "react";
 import {SetMainWindowContext} from "../../App.tsx";
 import BirdDescriptionWindow from "../birdDescriptionWindow.tsx";
+import {BirdEntry} from "./columns.tsx";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+}
+
+function convertRowToBirdEntry(row: Row<TData>): BirdEntry {
+    return (Object.fromEntries(row.getVisibleCells().map(
+        cell => [cell.column.id, cell.getValue()])));
+
 }
 
 export function DataTable<TData, TValue>({
@@ -67,7 +74,7 @@ export function DataTable<TData, TValue>({
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
                                     onClick={() => setMainWindowState(<BirdDescriptionWindow
-                                        selectedBird={row.getValue('latin_name')}/>)}
+                                        selectedBird={convertRowToBirdEntry(row)}/>)}
                                 >
 
                                     {row.getVisibleCells().map((cell) => (
