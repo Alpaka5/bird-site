@@ -38,7 +38,7 @@ export default function QuizWindow() {
     return (
         <>
             <div className="flex-col">
-                <QuizImage/>
+                 The amazing BIRD QUIZ!
                 <QuizAnswers/>
                 <QuizButton/>
             </div>
