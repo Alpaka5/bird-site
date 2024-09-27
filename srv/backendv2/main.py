@@ -1,21 +1,18 @@
+import logging
+
 from fastapi import FastAPI
-from .database.database import SessionLocal, engine
-from .database import models, schemas
+from database.database import SessionLocal, engine
+from database import models, schemas
+from api_routers import birds
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
+app.include_router(birds.router)
 
 # Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @app.get("/")
-async def root():
+def root():
     return {"message": "Hello World"}

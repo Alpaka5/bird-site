@@ -87,8 +87,8 @@ class Bird(Base):
     latin_name: Mapped[str] = mapped_column(primary_key=True)
     length_min_mm: Mapped[int]
     length_max_mm: Mapped[int]
-    weight_min_g: Mapped[int]
-    weight_max_g: Mapped[int]
+    weight_min_g: Mapped[float]
+    weight_max_g: Mapped[float]
     family: Mapped[str] = mapped_column(ForeignKey("birdfamily.latin_name"))
 
     family_rel: Mapped["BirdFamily"] = relationship(back_populates="birds")
@@ -97,7 +97,7 @@ class Bird(Base):
     name_translations: Mapped[List["BirdNameTranslation"]] = relationship(
         back_populates="bird_rel"
     )
-    tags: Mapped[List["BirdTag"]] = relationship(back_populates="birds_rel")
+    tags: Mapped[List["BirdTag"]] = relationship(back_populates="bird_rel")
 
     def __str__(self):
         return self.latin_name
