@@ -5,18 +5,18 @@ from sqlalchemy.orm import Session
 
 from database.database import get_db
 from database.models import Bird, BirdTextField, Language
-from database import schemas, models
+from database import schemas, models, crud
 from helper.logger import logger
 
-router = APIRouter()
+router = APIRouter(prefix="/birds")
 
 
 @router.get("/by_latin_name/{bird_latin_name}", response_model=schemas.Bird)
 def get_bird_by_id(bird_latin_name: str, db: Session = Depends(get_db)):
 
-    bird = db.execute(select(Bird).where(Bird.latin_name == bird_latin_name)).first()[0]
+    bird = crud.get_single_bird(db, bird_latin_name)
     if bird:
-        return bird
+        return bird[0]
     else:
         raise HTTPException(
             status_code=404, detail=f"Bird with name: {bird_latin_name} doesn't exist"
@@ -26,7 +26,7 @@ def get_bird_by_id(bird_latin_name: str, db: Session = Depends(get_db)):
 @router.get("/all_birds", response_model=list[schemas.Bird])
 def get_all_birds(db: Session = Depends(get_db)):
     logger.info("DOWNLOADING BIRDS DATA")
-    return db.query(select(Bird).subquery()).all()
+    return crud.get_all_birds(db)
 
 
 @router.get(
@@ -36,21 +36,16 @@ def get_bird_description(
     bird_latin_name: str, language_id: str, db: Session = Depends(get_db)
 ):
     logger.info(f"Fetching {bird_latin_name} description")
-    languages = list(db.query(select(Language).subquery()).all())
+    languages = list(crud.get_supported_languages(db))
     if language_id not in languages:
         raise HTTPException(
             status_code=404,
             detail=f"Language {language_id} not found, use one of {languages}",
         )
 
-    fetched_bird = db.query(
-        select(BirdTextField).where(
-            and_(
-                BirdTextField.bird == bird_latin_name,
-                BirdTextField.language == language_id,
-            )
-        )
-    ).first()[0]
+    fetched_bird = crud.get_bird_text_field(
+        db=db, bird_latin_name=bird_latin_name, language_id=language_id
+    )[0]
 
     if not fetched_bird:
         return {

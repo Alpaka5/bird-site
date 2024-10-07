@@ -13,6 +13,15 @@ class Bird(BaseModel):
         from_attributes = True
 
 
+class BirdDetailed(Bird):
+    order: str
+    suborder: str
+    tags: list[str]
+
+    class Config:
+        from_attributes = True
+
+
 class BirdTextField(BaseModel):
     bird: str
     language: str
