@@ -48,8 +48,6 @@ class QuizGame:
             ) as bird_sound:
                 return BirdQuizAnswer(
                     bird=detailed_bird,
-                    sound=bird_sound.read(),
-                    image=bird_image.read(),
                     correct_bird=correct_answer,
                 )
         except FileNotFoundError as err:
@@ -81,6 +79,7 @@ class QuizGame:
                     >= bird.length_min_mm * (1 - (size_perc_mult * 0.1)),
                     models.Bird.length_max_mm
                     <= bird.length_max_mm * (1 + (size_perc_mult * 0.1)),
+                    models.Bird.latin_name != bird.latin_name,
                 ),
             )
             if len(similar_birds) >= 3:

@@ -1,10 +1,9 @@
 import openpyxl
 from fastapi import APIRouter, UploadFile, HTTPException, Depends
-from sqlalchemy import select, and_
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from database.database import get_db
-from database.models import Bird, BirdTextField, Language
 from database import schemas, models, crud
 from helper.logger import logger
 
@@ -82,3 +81,17 @@ def update_db_with_birds(file: UploadFile, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "WORKED HELLA FINE"}
+
+
+@router.get("/image/{bird_latin_name}")
+def get_bird_image(bird_latin_name):
+    return FileResponse(
+        f"assets/images/{bird_latin_name.replace(' ','_')}.png", media_type="image/png"
+    )
+
+
+@router.get("/sound/{bird_latin_name}")
+def get_bird_image(bird_latin_name):
+    return FileResponse(
+        f"assets/sounds/{bird_latin_name.replace(' ','_')}.m4a", media_type="audio/m4a"
+    )
