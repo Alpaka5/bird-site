@@ -17,6 +17,7 @@ class BirdDetailed(Bird):
     order: str
     suborder: str
     tags: list[str]
+    winning_bird: bool
 
     class Config:
         from_attributes = True

@@ -1,12 +1,10 @@
-import {useState, createContext, useContext} from 'react'
+import {useState, createContext} from 'react'
 
 import './App.css'
 import './styles/base.css'
 import MainCommandMenu from './components/maincommandmenu.tsx'
-import QuizWindow from './components/quizWindow.tsx'
-import LibraryWindow from './components/libraryWindow.tsx'
+import QuizWindow from './components/quiz/quizWindow.tsx'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import BirdDescriptionWindow from "./components/birdDescriptionWindow.tsx";
 
 export const SetMainWindowContext = createContext(() => {
 });

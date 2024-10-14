@@ -11,20 +11,20 @@ class QuizGame:
     def __init__(self, db: Session):
         self.db: Session = db
 
-    def get_quiz_game(self) -> list[BirdQuizAnswer]:
+    def get_quiz_game(self) -> BirdQuizAnswer:
         # First we need to determine which bird to choose.
-        correct_bird: BirdQuizAnswer = self.choose_random_correct_bird()
+        correct_bird: BirdDetailed = self.choose_random_correct_bird()
 
         # Then get all necessary data about this bird - size, weight, orders etc., photo and sound
         # Then we need to get similar birds
-        chosen_birds: list[BirdQuizAnswer] = self.get_similar_birds(correct_bird.bird)
+        chosen_birds: list[BirdDetailed] = self.get_similar_birds(correct_bird)
         chosen_birds.append(correct_bird)
         random.shuffle(chosen_birds)
         # Create response with winning bird and losing birds.
 
-        return chosen_birds
+        return BirdQuizAnswer(correct_bird=correct_bird.latin_name, birds=chosen_birds)
 
-    def choose_random_correct_bird(self) -> BirdQuizAnswer:
+    def choose_random_correct_bird(self) -> BirdDetailed:
         """
         Gets random bird from database with all the details
         @return: BirdDetailed object
@@ -34,26 +34,11 @@ class QuizGame:
 
         bird_data = crud.get_single_bird(db=self.db, bird_latin_name=chosen_bird)[0]
 
-        return self.get_bird_answer(bird_data, correct_answer=True)
+        return self.get_detailed_bird(bird=bird_data, winning_bird=True)
 
-    def get_bird_answer(
-        self, bird: models.Bird, correct_answer: bool = False
-    ) -> BirdQuizAnswer:
-        detailed_bird: BirdDetailed = self.get_detailed_bird(bird=bird)
-        try:
-            with open(
-                f"assets/images/{bird.latin_name.replace(' ','_')}.png", "rb"
-            ) as bird_image, open(
-                f"assets/sounds/{bird.latin_name.replace(' ','_')}.m4a", "rb"
-            ) as bird_sound:
-                return BirdQuizAnswer(
-                    bird=detailed_bird,
-                    correct_bird=correct_answer,
-                )
-        except FileNotFoundError as err:
-            raise err
-
-    def get_detailed_bird(self, bird: models.Bird) -> BirdDetailed:
+    def get_detailed_bird(
+        self, bird: models.Bird, winning_bird: bool = False
+    ) -> BirdDetailed:
         return BirdDetailed(
             latin_name=bird.latin_name,
             length_min_mm=bird.length_min_mm,
@@ -64,13 +49,12 @@ class QuizGame:
             order=bird.family_rel.suborder_rel.order_rel.latin_name,
             suborder=bird.family_rel.suborder_rel.latin_name,
             tags=[tag.tag for tag in bird.tags],
+            winning_bird=winning_bird,
         )
 
-    def get_similar_birds(self, bird: BirdDetailed) -> list[BirdQuizAnswer]:
+    def get_similar_birds(self, bird: BirdDetailed) -> list[BirdDetailed]:
         # We will choose similar birds based on size, if we don't find at least 3 birds, we make our margin higher
-        chosen_birds: list[BirdQuizAnswer] = []
-        size_perc_mult = 0
-        similar_birds = []
+        similar_birds: list[BirdDetailed] = []
         for size_perc_mult in range(1, 11):
             similar_birds = crud.get_birds(
                 db=self.db,
@@ -88,7 +72,4 @@ class QuizGame:
             raise ValueError(f"Couldn't find 3 similar birds to bird {bird.latin_name}")
 
         random.shuffle(similar_birds)
-        return [
-            self.get_bird_answer(bird=bird[0], correct_answer=False)
-            for bird in similar_birds[0:3]
-        ]
+        return [self.get_detailed_bird(bird) for bird in similar_birds[0:3]]

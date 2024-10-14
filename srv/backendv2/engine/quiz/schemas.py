@@ -3,5 +3,5 @@ from database.schemas import BirdDetailed
 
 
 class BirdQuizAnswer(BaseModel):
-    bird: BirdDetailed
-    correct_bird: bool
+    birds: list[BirdDetailed]
+    correct_bird: str

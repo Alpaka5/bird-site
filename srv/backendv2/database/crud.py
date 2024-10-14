@@ -1,7 +1,10 @@
+from typing import Sequence
+
 from sqlalchemy.orm import Session
 from sqlalchemy import select, and_, Row
 
 from database import models, schemas
+from database.models import Language
 
 
 def get_single_bird(db: Session, bird_latin_name: str) -> Row[models.Bird]:
@@ -22,19 +25,19 @@ def get_all_birds_names(db: Session) -> list[Row]:
 
 
 def get_all_birds(db: Session):
-    return db.query(select(models.Bird).subquery()).all()
+    return db.scalars(select(models.Bird)).all()
 
 
 def get_birds(db: Session, where_filter):
-    return db.execute(select(models.Bird).where(where_filter)).all()
+    return db.scalars(select(models.Bird).where(where_filter)).all()
 
 
-def get_supported_languages(db: Session):
-    return db.query(select(models.Language).subquery()).all()
+def get_supported_languages(db: Session) -> Sequence[Language]:
+    return db.scalars(select(models.Language)).all()
 
 
 def get_bird_text_field(db: Session, bird_latin_name: str, language_id: str):
-    return db.query(
+    return db.execute(
         select(models.BirdTextField).where(
             and_(
                 models.BirdTextField.bird == bird_latin_name,

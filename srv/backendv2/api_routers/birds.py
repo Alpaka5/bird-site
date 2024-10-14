@@ -35,7 +35,7 @@ def get_bird_description(
     bird_latin_name: str, language_id: str, db: Session = Depends(get_db)
 ):
     logger.info(f"Fetching {bird_latin_name} description")
-    languages = list(crud.get_supported_languages(db))
+    languages = [language.code for language in crud.get_supported_languages(db)]
     if language_id not in languages:
         raise HTTPException(
             status_code=404,
@@ -44,17 +44,17 @@ def get_bird_description(
 
     fetched_bird = crud.get_bird_text_field(
         db=db, bird_latin_name=bird_latin_name, language_id=language_id
-    )[0]
+    )
 
-    if not fetched_bird:
+    if fetched_bird is None:
         return {
-            "bird_id": bird_latin_name,
-            "language_id": language_id,
+            "bird": bird_latin_name,
+            "language": language_id,
             "description": f"Temporary description generated for {bird_latin_name} because I was lazy for now",
         }
 
-    logger.info(fetched_bird)
-    return fetched_bird
+    logger.info(fetched_bird[0])
+    return fetched_bird[0]
 
 
 @router.post("/db/update", tags=["db"])

@@ -17,7 +17,7 @@ export default function LibraryWindow() {
     const postQuery = useQuery({
         queryKey: ['birds_data'],
         queryFn: async () => {
-            const response = await axios.get('http://localhost:5000/api/birds/all_birds');
+            const response = await axios.get('http://localhost:5000/birds/all_birds');
             const data = await response.data;
             return data;
         }

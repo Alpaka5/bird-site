@@ -11,7 +11,7 @@ from main import app
 
 
 @fixture(scope="session")
-def loaded_db():
+def db_session():
     SQLALCHEMY_DATABASE_URL = "sqlite://"
 
     engine = create_engine(
@@ -23,7 +23,12 @@ def loaded_db():
 
     Base.metadata.create_all(bind=engine)
 
-    curr_db = TestingSessionLocal()
+    return TestingSessionLocal()
+
+
+@fixture(scope="session")
+def loaded_db(db_session):
+
     with open("tests/fixtures/test_birds_data.xlsx", "rb") as test_bird_data:
 
         workbook: openpyxl.Workbook = openpyxl.load_workbook(test_bird_data)
@@ -37,11 +42,24 @@ def loaded_db():
 
         for row_values in worksheet.iter_rows(min_row=2, values_only=True):
             row_dict = {field: value for field, value in zip(db_fields, row_values)}
-            curr_db.add(current_model(**row_dict))
+            db_session.add(current_model(**row_dict))
 
-    curr_db.commit()
+    db_session.commit()
 
-    return curr_db
+    return db_session
+
+
+@fixture(scope="session")
+def loaded_api_test_client(loaded_db):
+    def override_get_db():
+        try:
+            yield loaded_db
+        finally:
+            loaded_db.close()
+
+    app.dependency_overrides[get_db] = override_get_db
+
+    return TestClient(app)
 
 
 @fixture(scope="session")
