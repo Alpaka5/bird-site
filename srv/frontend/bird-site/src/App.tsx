@@ -2,7 +2,9 @@ import {useState, createContext} from 'react'
 
 import './App.css'
 import './styles/base.css'
+import './styles/quiz_styles.css'
 import MainCommandMenu from './components/maincommandmenu.tsx'
+import MainBanner from './components/mainBanner.tsx'
 import QuizWindow from './components/quiz/quizWindow.tsx'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
@@ -26,7 +28,8 @@ function App() {
     return (
         <>
             <QueryClientProvider client={queryClient}>
-                <div className="main-grid">
+                <div className="main-grid h-screen w-screen p-0">
+                    <MainBanner/>
                     <SetMainWindowContext.Provider value={setMainWindowState}>
                         <MainCommandMenu/>
                         {mainWindowState}

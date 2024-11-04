@@ -12,7 +12,6 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
             return await response.data as birdDescription;
         }
     });
-
     if (postQuery.isLoading) return <h1>Loading....</h1>;
     if (postQuery.isError) return <h1>Error loading data!!!</h1>;
 
@@ -26,7 +25,7 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
                 <div className="text-start">Height
                     [mm]: {selectedBird.length_min_mm} - {selectedBird.length_max_mm}</div>
                 <div>
-                    <audio controls src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
+                    <audio controls className="h-7" src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
                 </div>
             </div>
             <div>

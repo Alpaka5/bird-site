@@ -1,6 +1,8 @@
 .main-grid {
     display: grid;
     grid-template-columns: 1fr 10fr;
+    grid-template-rows: 2fr 10fr;
+    grid-gap: 10px;
 }
 
 .bird-description-grid {
