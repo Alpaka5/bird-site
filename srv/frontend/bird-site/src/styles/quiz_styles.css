@@ -1,7 +1,27 @@
+
+
 .answer-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0fr;
     justify-items: center;
-    width: 100%;
+    width: 90%;
     row-gap: 1.25rem;
+
 }
+
+.answer-button-gray {
+    background-color: #ffffff;
+}
+
+.answer-button-red {
+    background-color: #ff2424;
+}
+
+.answer-button-green {
+    background-color: #91ff7a;
+}
+
+.start-new-game-button {
+    background-color: #fff12e;
+}
+

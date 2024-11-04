@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+@font-face {
+  font-family: "fantasy";   /*Can be any text*/
+  src: local("AirbnbCerealLight"),
+    url("./components/fonts/FontdinerSwanky-Regular.ttf") format("truetype");
+}

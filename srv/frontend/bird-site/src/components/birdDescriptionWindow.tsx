@@ -17,7 +17,7 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
 
 
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 h-auto justify-evenly gap-4">
             <div className="place-content-center">
                 <div className="font-bold text-start">{selectedBird.latin_name}</div>
                 <div className="italic text-start">{selectedBird.family}</div>
@@ -25,16 +25,19 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
                 <div className="text-start">Height
                     [mm]: {selectedBird.length_min_mm} - {selectedBird.length_max_mm}</div>
                 <div>
-                    <audio controls className="h-7" src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
+                    <audio controls className="h-7"
+                           src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
+                </div>
+                <br/>
+                <div className="text-start">
+                    {postQuery.data.description}
                 </div>
             </div>
-            <div>
+            <div className="w-full">
                 <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
                      className="w-100"/>
             </div>
-            <div className="col-span-2 text-start">
-                {postQuery.data.description}
-            </div>
+
 
         </div>
     )

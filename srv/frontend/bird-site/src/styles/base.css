@@ -3,6 +3,20 @@
     grid-template-columns: 1fr 10fr;
     grid-template-rows: 2fr 10fr;
     grid-gap: 10px;
+    background-color: #b3ddff;
+}
+
+.banner-style{
+    font-family: "fantasy";
+    grid-column: span 2 / span 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-font-size: 64rem;
+    font-size: 6rem;
+    color: #fff12e;
+    background-color: #58a0fd;
+
 }
 
 .bird-description-grid {

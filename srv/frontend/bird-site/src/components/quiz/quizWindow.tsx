@@ -54,12 +54,13 @@ function QuizAnswer({bird, onClick}: { bird: birdDetailed, collapseState: Object
 
     return (
         <div id={"col_quiz_ans_" + bird.latin_name}
-             className="col-start-1 col-end-1 min-w-64 bg-gray-300 p-5 rounded-xl hover:outline-gray-500 hover:outline hover:outline-2"
+             className="flex justify-center items-center col-start-1 col-end-1 max-w-64 w-full
+             answer-button-gray p-5 rounded-xl hover:outline-gray-500 hover:outline hover:outline-2"
              onClick={(event) => {
                  onClick(event)
              }}
              data-winning={bird.winning_bird}>
-            {capitalizeFirstLetter(bird.latin_name)}
+            <>{capitalizeFirstLetter(bird.latin_name)}</>
         </div>
     )
 }
@@ -78,9 +79,9 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
             for (const single_bird of quizGame.birds) {
                 let answerItem = document.getElementById("col_quiz_ans_" + single_bird.latin_name);
                 if (answerItem.dataset.winning == 'true') {
-                    answerItem.style.backgroundColor = "green";
+                    answerItem.classList.replace("answer-button-gray", "answer-button-green");
                 } else {
-                    answerItem.style.backgroundColor = "red";
+                    answerItem.classList.replace("answer-button-gray", "answer-button-red");
                 }
 
 
@@ -89,6 +90,12 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
             if (bird.winning_bird == true) {
                 setCorrectAnswersCounter(correctAnswersCounter + 1);
             }
+            let quizBirdDescription = document.getElementById("quiz-bird-description");
+            quizBirdDescription.hidden = false;
+
+            let quizAnswerGrid = document.getElementById("quiz-answer-grid");
+            quizAnswerGrid.style.gridTemplateColumns = "1fr 3fr"
+            quizAnswerGrid.style.columnGap='6rem';
         }
 
         setBirdDescription(<BirdDescriptionWindow selectedBird={bird}/>)
@@ -112,13 +119,23 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
         let quizBirdSound: HTMLElement = document.getElementById("quiz_bird_sound")
         quizBirdSound.pause()
         quizBirdSound.currentTime = 0
+
+        let quizBirdDescription = document.getElementById("quiz-bird-description");
+        quizBirdDescription.hidden = true;
+
+        let quizAnswerGrid = document.getElementById("quiz-answer-grid");
+        quizAnswerGrid.style.gridTemplateColumns = "1fr 0fr"
+        quizAnswerGrid.style.columnGap='0rem';
+
         event.currentTarget.setAttribute("hidden", true);
         quizQuery.refetch();
         setAllAnswersCounter(allAnswersCounter + 1);
         setQuizAnswered(false);
         for (const single_bird of quizGame.birds) {
             let answer_item = document.getElementById("col_quiz_ans_" + single_bird.latin_name);
-            answer_item.style.backgroundColor = "lightgray";
+            answer_item.classList.add("answer-button-gray")
+            answer_item.classList.remove("answer-button-red")
+            answer_item.classList.remove("answer-button-green")
         }
         for (const collapseState of collapseStateList) {
             collapseState["setter"](false);
@@ -134,13 +151,14 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
     return (
         <>
             <div className="flex flex-row flex-initial justify-center w-full">
-                <div className="answer-grid w-full  justify-items-center ">
+                <div id="quiz-answer-grid" className="answer-grid  ">
                     {quizAnswers}
                     <div id="quiz-bird-description"
-                         className="hidden w-full col-start-2 col-end-2 row-start-1 row-end-5">{birdDescription}</div>
+                         className="w-full col-start-2 col-end-2 row-start-1 row-end-5 outline p-5 outline-gray-500 outline-2 bg-gray-100"
+                         hidden={true}>{birdDescription}</div>
                 </div>
             </div>
-            <button id="new_quiz_button" className="bg-orange-300 m-1" hidden={true}
+            <button id="new_quiz_button" className="start-new-game-button m-1" hidden={true}
                     onClick={(e: MouseEvent) => {
                         startNewQuiz(e)
                     }}>Start new game
