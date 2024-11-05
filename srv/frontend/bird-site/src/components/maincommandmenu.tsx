@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import {SetMainWindowContext} from '../App.tsx'
 import {
     Command,
@@ -8,19 +8,20 @@ import {
 } from "@/components/ui/command"
 import QuizWindow from "./quiz/quizWindow.tsx";
 import LibraryWindow from "./libraryWindow.tsx";
+import MainBanner from "./mainBanner.tsx";
 
 export default function MainCommandMenu() {
     const setMainWindowState: Function = useContext(SetMainWindowContext);
     return (
         <>
-            <Command>
-                <CommandList>
-                    <CommandGroup heading="Birds">
-                        <CommandItem onSelect={() => setMainWindowState(<QuizWindow/>)}>Quiz</CommandItem>
-                        <CommandItem onSelect={() => setMainWindowState(<LibraryWindow />)}>Library</CommandItem>
-                    </CommandGroup>
-                </CommandList>
-            </Command>
+
+            <div className="main-command-menu gap-10">
+                <MainBanner/>
+                <div className="flex justify-evenly items-center">
+                    <div className="nav-menu-text nav-menu-button" onClick={() => setMainWindowState(<QuizWindow/>)}>Quiz</div>
+                    <div className="nav-menu-text nav-menu-button" onClick={() => setMainWindowState(<LibraryWindow/>)}>Library</div>
+                </div>
+            </div>
         </>
     )
 }

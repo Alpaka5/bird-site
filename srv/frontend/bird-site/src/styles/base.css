@@ -1,22 +1,51 @@
 .main-grid {
     display: grid;
-    grid-template-columns: 1fr 10fr;
-    grid-template-rows: 2fr 10fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 9fr;
     grid-gap: 10px;
-    background-color: #b3ddff;
+    background-color: #58a0fd;
+}
+
+.main-command-menu {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
 }
 
 .banner-style{
     font-family: "fantasy";
-    grid-column: span 2 / span 2;
     display: flex;
     justify-content: center;
     align-items: center;
-    max-font-size: 64rem;
-    font-size: 6rem;
     color: #fff12e;
     background-color: #58a0fd;
 
+}
+
+.nav-menu-text{
+    font-family: "serif-medium";
+    color: #fff12e;
+    font-size: 1.75rem;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.nav-menu-text:hover{
+    font-family: "serif-medium";
+    color: #58a0fd;
+    font-size: 2rem;
+    transition: 0.1s;
+
+}
+
+.nav-menu-button{
+    padding: 0.2rem 1rem;
+    transition: 0.5s;
+    border-radius: 0.75rem
+
+}
+
+.nav-menu-button:hover{
+    transition: 0.5s;
+    background-color: #fff12e;
 }
 
 .bird-description-grid {

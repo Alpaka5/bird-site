@@ -6,22 +6,30 @@
     justify-items: center;
     width: 90%;
     row-gap: 1.25rem;
-
+    transition: 1s;
 }
 
 .answer-button-gray {
     background-color: #ffffff;
+    transition: 1s;
+}
+.answer-button-gray:hover{
+    background-color: #f4f4f4;
+    transition: 1s;
 }
 
 .answer-button-red {
     background-color: #ff2424;
+    transition: 1s;
 }
 
 .answer-button-green {
     background-color: #91ff7a;
+    transition: 1s;
 }
 
 .start-new-game-button {
     background-color: #fff12e;
+    transition: 1s;
 }
 

@@ -29,10 +29,9 @@ function App() {
         <>
             <QueryClientProvider client={queryClient}>
                 <div className="main-grid h-screen w-screen p-0">
-                    <MainBanner/>
                     <SetMainWindowContext.Provider value={setMainWindowState}>
                         <MainCommandMenu/>
-                        {mainWindowState}
+                        <div className="self-center">{mainWindowState}</div>
                     </SetMainWindowContext.Provider>
                 </div>
             </QueryClientProvider>

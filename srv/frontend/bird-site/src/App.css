@@ -43,6 +43,30 @@
 
 @font-face {
   font-family: "fantasy";   /*Can be any text*/
-  src: local("AirbnbCerealLight"),
+  src: local("FontdinerSwanky-Regular"),
     url("./components/fonts/FontdinerSwanky-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "serif-bold";   /*Can be any text*/
+  src: local("Pridi-Bold"),
+    url("./components/fonts/Pridi-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "serif-semibold";   /*Can be any text*/
+  src: local("Pridi-SemiBold"),
+    url("./components/fonts/Pridi-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "serif-medium";   /*Can be any text*/
+  src: local("Pridi-Medium"),
+    url("./components/fonts/Pridi-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "serif";   /*Can be any text*/
+  src: local("Pridi-Regular"),
+    url("./components/fonts/Pridi-Regular.ttf") format("truetype");
 }

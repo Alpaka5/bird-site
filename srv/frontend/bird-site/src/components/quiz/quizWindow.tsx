@@ -137,9 +137,6 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
             answer_item.classList.remove("answer-button-red")
             answer_item.classList.remove("answer-button-green")
         }
-        for (const collapseState of collapseStateList) {
-            collapseState["setter"](false);
-        }
 
         setTimeout(function () {
             quizBirdSound.play();
