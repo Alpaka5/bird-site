@@ -1,35 +1,67 @@
-
-
 .answer-grid {
-    display: grid;
+    display: flex;
     grid-template-columns: 1fr 0fr;
-    justify-items: center;
+    justify-items: start;
+    align-content: center;
     width: 90%;
     row-gap: 1.25rem;
     transition: 1s;
 }
 
-.answer-button-gray {
+.flex-quiz-box {
+  height: 25rem;
+}
+
+.quiz-description{
+    opacity: 1;
+    width: 50%;
+    flex: 0.6;
+    transition: opacity 0.2s linear 0.2s, flex 0.2s ;
+}
+.quiz-description-hidden{
+    opacity: 0;
+    width: 50%;
+    flex:0.00001;
+    transition: opacity 0.2s, flex 0.2s linear 0.2s;
+
+}
+.answer-button{
+        background-color: #ffffff;
+    outline-color: #fff12e;
+    outline-offset: -4px;
+    outline-style: solid;
+    outline-width: 0;
+    transition: 0.2s  ease-in;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: black;
+    font-size: 1.1rem;
+}
+
+.answer-button:hover{
+    background-color: #b3ddff;
+    outline-width: 6px;
+    transition: 0.2s  ease-in;
+    font-weight: bold;
+}
+
+.button-gray {
     background-color: #ffffff;
-    transition: 1s;
-}
-.answer-button-gray:hover{
-    background-color: #f4f4f4;
-    transition: 1s;
 }
 
-.answer-button-red {
+
+.button-red {
     background-color: #ff2424;
-    transition: 1s;
 }
 
-.answer-button-green {
+.button-green {
     background-color: #91ff7a;
-    transition: 1s;
 }
 
 .start-new-game-button {
     background-color: #fff12e;
-    transition: 1s;
+    transition: 0.2s;
+    opacity: 0;
+    visibility: hidden;
 }
 

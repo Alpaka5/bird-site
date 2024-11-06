@@ -70,3 +70,24 @@
   src: local("Pridi-Regular"),
     url("./components/fonts/Pridi-Regular.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "sans-serif";   /*Can be any text*/
+  src: local("Cousine-Regular"),
+    url("./components/fonts/Cousine-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "sans-serif";   /*Can be any text*/
+  src: local("Cousine-Bold"),
+    url("./components/fonts/Cousine-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+.sans-serif-text {
+  font-family: sans-serif;
+}
