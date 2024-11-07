@@ -9,39 +9,44 @@
 }
 
 .flex-quiz-box {
-  height: 25rem;
+    height: 40rem;
 }
 
-.quiz-description{
+.quiz-description {
+    display: flex;
     opacity: 1;
+    height: 80%;
     width: 50%;
     flex: 0.6;
-    transition: opacity 0.2s linear 0.2s, flex 0.2s ;
+    transition: opacity 0.2s linear 0.2s, flex 0.2s;
 }
-.quiz-description-hidden{
-    opacity: 0;
-    width: 50%;
-    flex:0.00001;
-    transition: opacity 0.2s, flex 0.2s linear 0.2s;
 
+.quiz-description-hidden {
+    opacity: 0;
+    height: 80%;
+    width: 50%;
+    flex: 0.000000001;
+    transition: opacity 0.2s, flex 0.2s linear 0.2s;
 }
-.answer-button{
-        background-color: #ffffff;
+
+.answer-button {
+    background-color: #ffffff;
     outline-color: #fff12e;
     outline-offset: -4px;
     outline-style: solid;
     outline-width: 0;
-    transition: 0.2s  ease-in;
+    transition: 0.2s ease-in;
     font-family: sans-serif;
     font-weight: normal;
     color: black;
-    font-size: 1.1rem;
+    font-size: 2rem;
+    min-width: 28rem;
 }
 
-.answer-button:hover{
+.answer-button:hover {
     background-color: #b3ddff;
     outline-width: 6px;
-    transition: 0.2s  ease-in;
+    transition: 0.2s ease-in;
     font-weight: bold;
 }
 
@@ -59,9 +64,24 @@
 }
 
 .start-new-game-button {
+    cursor: pointer;
     background-color: #fff12e;
     transition: 0.2s;
     opacity: 0;
     visibility: hidden;
+    font-family: sans-serif;
+    font-size: 1.25rem;
+    margin: 0.25rem;
 }
-
+.start-new-game-button:hover {
+    outline-color: #fff12e;
+    outline-style: solid;
+    outline-offset: -2px;
+    outline-width: 4px;
+    transition: 0.2s;
+}
+.description_image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

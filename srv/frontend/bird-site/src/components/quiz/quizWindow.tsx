@@ -3,7 +3,7 @@ import axios, {post} from "axios";
 
 import {birdDetailed, responseQuiz} from "../types/quizGameResponseType.tsx"
 import {birdDescription} from "../types/birdResponsesType.tsx";
-import BirdDescriptionWindow from "../birdDescriptionWindow.tsx";
+import BirdDescriptionQuizWindow from "./birdDescriptionQuizWindow.tsx";
 import {createContext, useState} from "react";
 import {BirdEntry} from "../birds/columns.tsx";
 import AudioPlayer from "../ui/audioPlayer.tsx";
@@ -54,7 +54,7 @@ function QuizAnswer({bird, onClick}: { bird: birdDetailed, collapseState: Object
 
     return (
         <div id={"col_quiz_ans_" + bird.latin_name}
-             className="flex justify-center items-center col-start-1 col-end-1 min-w-64 w-full
+             className="flex justify-center items-center col-start-1 col-end-1 w-full
              answer-button button-gray p-5 rounded-xl"
              onClick={(event) => {
                  onClick(event)
@@ -100,7 +100,7 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
             // quizAnswerGrid.style.columnGap = '6rem';
         }
 
-        setBirdDescription(<BirdDescriptionWindow selectedBird={bird}/>)
+        setBirdDescription(<BirdDescriptionQuizWindow selectedBird={bird}/>)
 
         let newGameButton: HTMLElement = document.getElementById("new_quiz_button");
         newGameButton.style.visibility = "visible";
@@ -158,11 +158,11 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
                     {quizAnswers}
                 </div>
                 <div id="quiz-bird-description"
-                     className="quiz-description-hidden hidden outline p-5 outline-gray-500 outline-2 bg-gray-100"
+                     className="quiz-description-hidden hidden self-center outline p-5 outline-gray-500 outline-2 bg-gray-100"
                 >{birdDescription}</div>
 
             </div>
-            <button id="new_quiz_button" className="start-new-game-button m-1"
+            <button id="new_quiz_button" className="start-new-game-button m-1 "
                     onClick={(e: MouseEvent) => {
 
                         startNewQuiz(e)
@@ -172,7 +172,7 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
                 <source src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird}/>
             </audio>
 
-            <div>{correctAnswersCounter}/{allAnswersCounter}</div>
+            <div className="text-xl">{correctAnswersCounter}/{allAnswersCounter}</div>
         </>
     )
 }

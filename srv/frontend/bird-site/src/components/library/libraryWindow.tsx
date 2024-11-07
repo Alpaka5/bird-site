@@ -1,5 +1,5 @@
-import {columns} from "./birds/columns.tsx";
-import {DataTable} from "./birds/data-table.tsx";
+import {columns} from "../birds/columns.tsx";
+import {DataTable} from "../birds/data-table.tsx";
 import {useQuery} from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -27,7 +27,7 @@ export default function LibraryWindow() {
     if (postQuery.isError) return <h1>Error loading data!!!</h1>;
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="px-32">
 
             <DataTable columns={columns} data={postQuery.data}/>
         </div>

@@ -7,7 +7,7 @@ import {
     CommandList,
 } from "@/components/ui/command"
 import QuizWindow from "./quiz/quizWindow.tsx";
-import LibraryWindow from "./libraryWindow.tsx";
+import LibraryWindow from "./library/libraryWindow.tsx";
 import MainBanner from "./mainBanner.tsx";
 
 export default function MainCommandMenu() {

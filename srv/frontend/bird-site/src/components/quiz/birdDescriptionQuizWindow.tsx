@@ -1,8 +1,9 @@
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
-import '../styles/base.css'
-import {BirdEntry} from "./birds/columns.tsx";
-import {birdDescription} from "./types/birdResponsesType.tsx";
+import '../../styles/base.css'
+import '../../styles/quiz_styles.css'
+import {BirdEntry} from "../birds/columns.tsx";
+import {birdDescription} from "../types/birdResponsesType.tsx";
 
 export default function BirdDescriptionWindow({selectedBird}: { selectedBird: BirdEntry }) {
     const postQuery = useQuery({
@@ -17,7 +18,7 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
 
 
     return (
-        <div className="grid grid-cols-2 h-auto justify-evenly gap-4">
+        <div className="grid grid-cols-2  justify-evenly content-center gap-4">
             <div className="place-content-center">
                 <div className="font-bold text-start">{selectedBird.latin_name}</div>
                 <div className="italic text-start">{selectedBird.family}</div>
@@ -25,7 +26,7 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
                 <div className="text-start">Height
                     [mm]: {selectedBird.length_min_mm} - {selectedBird.length_max_mm}</div>
                 <div>
-                    <audio controls className="h-7"
+                    <audio controls className="h-7 mt-2"
                            src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
                 </div>
                 <br/>
@@ -33,10 +34,9 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
                     {postQuery.data.description}
                 </div>
             </div>
-            <div className="w-full">
-                <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
-                     className="w-100"/>
-            </div>
+
+            <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
+                 className="description_image"/>
 
 
         </div>

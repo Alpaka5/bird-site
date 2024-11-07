@@ -1,0 +1,29 @@
+.library-table {
+    background-color: #b3ddff;
+    border-radius: calc(var(--radius) - 2px);
+    border-width: 1px;
+    font-family: sans-serif;
+
+}
+
+.library-table-header {
+    background-color: #fff12e;
+}
+
+.library-table-header-entry {
+    font-family: serif;
+    font-size: 1.5rem;
+    font-weight: 600!important;
+    line-height: 2rem;
+    color: #58a0fd;
+}
+
+.library-bird-description {
+    background-color: #b3ddff;
+    border-radius: calc(var(--radius) - 2px);
+    border-width: 1px;
+    font-family: serif;
+    width: 100%;
+    padding: 5rem;
+
+}

@@ -22,18 +22,15 @@
 }
 
 .nav-menu-text{
-    font-family: "serif-medium";
+    font-family: "serif";
     color: #fff12e;
-    font-size: 1.75rem;
-    transition: 0.5s;
+    font-size: 2.5rem;
     cursor: pointer;
+    font-weight: 500;
 }
 .nav-menu-text:hover{
-    font-family: "serif-medium";
     color: #58a0fd;
-    font-size: 2rem;
-    transition: 0.1s;
-
+    font-size: 3rem;
 }
 
 .nav-menu-button{

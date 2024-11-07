@@ -1,11 +1,10 @@
-import "./fonts/FontdinerSwanky-Regular.ttf"
 
 export default function MainBanner() {
 
     return (
         <>
             <div className="banner-style">
-                <div className="text-4xl">Bird Quiz!</div>
+                <div className="text-5xl">Bird Quiz!</div>
             </div>
 
         </>

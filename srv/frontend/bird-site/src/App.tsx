@@ -28,10 +28,10 @@ function App() {
     return (
         <>
             <QueryClientProvider client={queryClient}>
-                <div className="main-grid h-screen w-screen p-0">
+                <div className="main-grid h-screen w-screen p-0 justify-center items-center">
                     <SetMainWindowContext.Provider value={setMainWindowState}>
                         <MainCommandMenu/>
-                        <div className="self-center">{mainWindowState}</div>
+                        <div className="w-full h-full">{mainWindowState}</div>
                     </SetMainWindowContext.Provider>
                 </div>
             </QueryClientProvider>

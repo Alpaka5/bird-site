@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/table"
 import {useContext} from "react";
 import {SetMainWindowContext} from "../../App.tsx";
-import BirdDescriptionWindow from "../birdDescriptionWindow.tsx";
+import BirdDescriptionWindow from "../library/birdDescriptionWindow.tsx";
 import {BirdEntry} from "./columns.tsx";
+import "../../styles/library_styles.css"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -47,14 +48,14 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="rounded-md border">
+            <div className="library-table">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="library-table-header">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead key={header.id} className="library-table-header-entry">
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -78,7 +79,7 @@ export function DataTable<TData, TValue>({
                                 >
 
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <TableCell key={cell.id} className="text-start text-xl">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
@@ -97,7 +98,8 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center justify-end space-x-2 py-4">
                 <Button
                     variant="outline"
-                    size="sm"
+                    size="lg"
+                    className="text-lg"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
@@ -105,7 +107,8 @@ export function DataTable<TData, TValue>({
                 </Button>
                 <Button
                     variant="outline"
-                    size="sm"
+                    className="text-lg"
+                    size="lg"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
