@@ -1,9 +1,10 @@
 .library-table {
     background-color: #b3ddff;
     border-radius: calc(var(--radius) - 2px);
-    border-width: 1px;
+    border-width: 2px;
+    border-color: #fff12e;
     font-family: sans-serif;
-
+    width: 100%;
 }
 
 .library-table-header {
@@ -21,9 +22,34 @@
 .library-bird-description {
     background-color: #b3ddff;
     border-radius: calc(var(--radius) - 2px);
-    border-width: 1px;
+    border-width: 2px;
+    border-color: #fff12e;
     font-family: serif;
-    width: 100%;
-    padding: 5rem;
+    width: 80%;
+    padding: 0;
 
+}
+
+.library-bird-decription-return-button {
+    background-color: #fff12e;
+    border-radius: 0.75rem;
+    width: max-content;
+    height: max-content;
+    font-size: 2rem;
+    font-family: sans-serif;
+    font-weight: 800;
+    padding: 0.5rem 1rem;
+    margin: 1.25rem;
+    justify-self: start;
+    outline-color: #fff12e;
+    outline-offset: -4px;
+    outline-style: solid;
+    outline-width: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.library-bird-decription-return-button:hover {
+    background-color: #58a0fd;
+    transition: 0.2s;
 }

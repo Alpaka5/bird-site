@@ -3,7 +3,7 @@ import {
     flexRender,
     getCoreRowModel,
     useReactTable,
-    getPaginationRowModel, Row
+    getPaginationRowModel, Row, PaginationState
 } from "@tanstack/react-table"
 
 import {Button} from "@/components/ui/button"
@@ -16,7 +16,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {useContext} from "react";
+import React, {useContext} from "react";
 import {SetMainWindowContext} from "../../App.tsx";
 import BirdDescriptionWindow from "../library/birdDescriptionWindow.tsx";
 import {BirdEntry} from "./columns.tsx";
@@ -37,17 +37,22 @@ export function DataTable<TData, TValue>({
                                              columns,
                                              data,
                                          }: DataTableProps<TData, TValue>) {
+    const [pagination, setPagination] = React.useState<PaginationState>({
+        pageIndex: 0,
+        pageSize: 12,
+    })
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        state: {pagination},
     })
 
     const setMainWindowState: Function = useContext(SetMainWindowContext);
 
     return (
-        <div>
+        <div className="w-4/5">
             <div className="library-table">
                 <Table>
                     <TableHeader className="library-table-header">

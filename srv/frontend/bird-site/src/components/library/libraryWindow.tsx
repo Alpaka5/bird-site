@@ -27,7 +27,7 @@ export default function LibraryWindow() {
     if (postQuery.isError) return <h1>Error loading data!!!</h1>;
 
     return (
-        <div className="px-32">
+        <div className="flex flex-column h-full w-full items-center justify-center">
 
             <DataTable columns={columns} data={postQuery.data}/>
         </div>

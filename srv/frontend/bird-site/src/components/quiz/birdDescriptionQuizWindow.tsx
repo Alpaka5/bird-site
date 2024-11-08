@@ -19,25 +19,26 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
 
     return (
         <div className="grid grid-cols-2  justify-evenly content-center gap-4">
-            <div className="place-content-center">
-                <div className="font-bold text-start">{selectedBird.latin_name}</div>
-                <div className="italic text-start">{selectedBird.family}</div>
-                <div className="text-start">Weight [g]: {selectedBird.weight_min_g} - {selectedBird.weight_max_g}</div>
-                <div className="text-start">Height
+            <div className="place-content-center text-start">
+                <div className="font-bold text-3xl font-serif">{selectedBird.latin_name}</div>
+                <div className="italic text-xl font-serif">{selectedBird.family}</div>
+                <div className="font-sans text-lg">Weight
+                    [g]: {selectedBird.weight_min_g} - {selectedBird.weight_max_g}</div>
+                <div className="font-sans text-lg">Height
                     [mm]: {selectedBird.length_min_mm} - {selectedBird.length_max_mm}</div>
                 <div>
-                    <audio controls className="h-7 mt-2"
+                    <audio controls className="h-7  mt-4"
                            src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
                 </div>
                 <br/>
-                <div className="text-start">
+                <div className="font-sans text-lg">
                     {postQuery.data.description}
                 </div>
             </div>
-
-            <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
-                 className="description_image"/>
-
+            <div className="flex justify-center">
+                <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
+                     className="description_image"/>
+            </div>
 
         </div>
     )

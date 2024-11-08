@@ -13,6 +13,10 @@
 }
 
 .quiz-description {
+    background-color: #b3ddff;
+    border-radius: calc(var(--radius) - 2px);
+    border-width: 2px;
+    border-color: #fff12e;
     display: flex;
     opacity: 1;
     height: 80%;
@@ -22,6 +26,10 @@
 }
 
 .quiz-description-hidden {
+    background-color: #b3ddff;
+    border-radius: calc(var(--radius) - 2px);
+    border-width: 2px;
+    border-color: #fff12e;
     opacity: 0;
     height: 80%;
     width: 50%;
@@ -40,6 +48,7 @@
     font-weight: normal;
     color: black;
     font-size: 2rem;
+    cursor:pointer;
     min-width: 28rem;
 }
 

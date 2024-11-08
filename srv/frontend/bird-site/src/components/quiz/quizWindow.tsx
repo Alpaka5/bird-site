@@ -158,7 +158,7 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
                     {quizAnswers}
                 </div>
                 <div id="quiz-bird-description"
-                     className="quiz-description-hidden hidden self-center outline p-5 outline-gray-500 outline-2 bg-gray-100"
+                     className="quiz-description-hidden hidden self-center p-5"
                 >{birdDescription}</div>
 
             </div>
