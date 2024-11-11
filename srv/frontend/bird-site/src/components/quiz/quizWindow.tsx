@@ -55,7 +55,7 @@ function QuizAnswer({bird, onClick}: { bird: birdDetailed, collapseState: Object
     return (
         <div id={"col_quiz_ans_" + bird.latin_name}
              className="flex justify-center items-center col-start-1 col-end-1 w-full
-             answer-button button-gray p-5 rounded-xl"
+             answer-button button-gray p-3 rounded-xl"
              onClick={(event) => {
                  onClick(event)
              }}
@@ -154,7 +154,7 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
     return (
         <>
             <div className="flex flex-row flex-quiz-box justify-center w-full gap-8">
-                <div className="flex flex-col justify-evenly duration-500">
+                <div className="flex flex-col justify-center duration-500 gap-5">
                     {quizAnswers}
                 </div>
                 <div id="quiz-bird-description"
@@ -162,16 +162,16 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
                 >{birdDescription}</div>
 
             </div>
+
+            <audio id="quiz_bird_sound" controlsList="nodownload" controls>
+                <source src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird}/>
+            </audio>
             <button id="new_quiz_button" className="start-new-game-button m-1 "
                     onClick={(e: MouseEvent) => {
 
                         startNewQuiz(e)
                     }}>Start new game
             </button>
-            <audio id="quiz_bird_sound" controlsList="nodownload" controls>
-                <source src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird}/>
-            </audio>
-
             <div className="text-xl">{correctAnswersCounter}/{allAnswersCounter}</div>
         </>
     )

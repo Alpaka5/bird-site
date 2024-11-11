@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+import datetime as dt
 
 
 class Bird(BaseModel):
@@ -27,6 +28,47 @@ class BirdTextField(BaseModel):
     bird: str
     language: str
     description: str
+
+    class Config:
+        from_attributes = True
+
+
+class _UserBase(BaseModel):
+    email: str
+
+
+class UserCreate(_UserBase):
+    username: str
+    hashed_password: str
+
+    class Config:
+        from_attributes = True
+
+
+class User(_UserBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+
+class _LeadBase(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    company: str
+    note: str
+
+
+class LeadCreate(_LeadBase):
+    pass
+
+
+class Lead(_LeadBase):
+    id: int
+    owner_id: int
+    date_created: dt.datetime
+    date_last_updated: dt.datetime
 
     class Config:
         from_attributes = True

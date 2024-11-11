@@ -1,8 +1,10 @@
+import datetime as dt
 import enum
 from typing import List
 
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Enum
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, mapped_column, Mapped
+from passlib import hash
 
 from .database import Base
 
@@ -147,3 +149,31 @@ class BirdTag(Base):
     tag: Mapped[str] = mapped_column(primary_key=True)
 
     bird_rel: Mapped["Bird"] = relationship(back_populates="tags")
+
+
+class User(Base):
+    __tablename__ = "user"
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    username: Mapped[str] = mapped_column(unique=True, index=True)
+    email: Mapped[str] = mapped_column(unique=True, index=True)
+    hashed_password: Mapped[str]
+
+    user_profile: Mapped["UserProfile"] = relationship(back_populates="user")
+
+    def verify_password(self, password: str):
+        return hash.bcrypt.verify(password, self.hashed_password)
+
+
+class UserProfile(Base):
+    __tablename__ = "userprofile"
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    first_name: Mapped[str] = mapped_column(index=True)
+    last_name: Mapped[str] = mapped_column(index=True)
+    note: Mapped[str] = mapped_column(default="")
+    date_created: Mapped[dt.datetime] = mapped_column(default=dt.datetime.now(dt.UTC))
+    date_last_updated: Mapped[dt.datetime] = mapped_column(
+        default=dt.datetime.now(dt.UTC)
+    )
+
+    user: Mapped["User"] = relationship(back_populates="user_profile")

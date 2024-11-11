@@ -41,9 +41,9 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
                         {postQuery.data.description}
                     </div>
                 </div>
-                <div className="flex justify-center p-5">
+                <div className="flex justify-center p-5 ">
                     <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
-                         className="w-100"/>
+                         className="w-100 object-cover"/>
                 </div>
                 <div id="libary-description-return-button"
                      className="library-bird-decription-return-button"

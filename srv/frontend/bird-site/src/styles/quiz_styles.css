@@ -9,7 +9,7 @@
 }
 
 .flex-quiz-box {
-    height: 40rem;
+    height: 65svh;
 }
 
 .quiz-description {
@@ -19,8 +19,8 @@
     border-color: #fff12e;
     display: flex;
     opacity: 1;
-    height: 80%;
-    width: 50%;
+    height: 60svh;
+    width: 60svh;
     flex: 0.6;
     transition: opacity 0.2s linear 0.2s, flex 0.2s;
 }
@@ -31,8 +31,8 @@
     border-width: 2px;
     border-color: #fff12e;
     opacity: 0;
-    height: 80%;
-    width: 50%;
+    height: 60svh;
+    width: 60svh;
     flex: 0.000000001;
     transition: opacity 0.2s, flex 0.2s linear 0.2s;
 }
@@ -47,9 +47,9 @@
     font-family: sans-serif;
     font-weight: normal;
     color: black;
-    font-size: 2rem;
+    font-size: 1.75rem;
     cursor:pointer;
-    min-width: 28rem;
+    min-width: 24rem;
 }
 
 .answer-button:hover {

@@ -1,8 +1,7 @@
 .main-grid {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 9fr;
-    grid-gap: 10px;
+    grid-template-rows: minmax(70px, 1fr) 9fr;
     background-color: #58a0fd;
 }
 
@@ -11,36 +10,37 @@
     grid-template-columns: 1fr 4fr 1fr;
 }
 
-.banner-style{
+.banner-style {
     font-family: "fantasy";
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff12e;
     background-color: #58a0fd;
-
+    font-size: 2.25rem; /* 36px */
 }
 
-.nav-menu-text{
+.nav-menu-text {
     font-family: "serif";
     color: #fff12e;
-    font-size: 2.5rem;
+    font-size: 2rem;
     cursor: pointer;
     font-weight: 500;
 }
-.nav-menu-text:hover{
+
+.nav-menu-text:hover {
     color: #58a0fd;
-    font-size: 3rem;
+    font-size: 2.25rem;
 }
 
-.nav-menu-button{
+.nav-menu-button {
     padding: 0.2rem 1rem;
     transition: 0.5s;
     border-radius: 0.75rem
 
 }
 
-.nav-menu-button:hover{
+.nav-menu-button:hover {
     transition: 0.5s;
     background-color: #fff12e;
 }

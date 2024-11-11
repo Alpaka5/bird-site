@@ -1,17 +1,19 @@
 import logging
 
-from fastapi import FastAPI
+from fastapi import FastAPI, security
 from fastapi.middleware.cors import CORSMiddleware
+
 
 from database.database import SessionLocal, engine
 from database import models, schemas
-from api_routers import birds, quiz
+from api_routers import birds, quiz, users
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(birds.router)
 app.include_router(quiz.router)
+app.include_router(users.router)
 
 # Dependency
 origins = [
