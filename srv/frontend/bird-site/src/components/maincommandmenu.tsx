@@ -21,6 +21,7 @@ export default function MainCommandMenu() {
                     <div className="nav-menu-text nav-menu-button" onClick={() => setMainWindowState(<QuizWindow/>)}>Quiz</div>
                     <div className="nav-menu-text nav-menu-button" onClick={() => setMainWindowState(<LibraryWindow/>)}>Library</div>
                 </div>
+                <div>Profile</div>
             </div>
         </>
     )

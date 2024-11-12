@@ -35,10 +35,11 @@ class BirdTextField(BaseModel):
 
 class _UserBase(BaseModel):
     email: str
+    username: str
 
 
 class UserCreate(_UserBase):
-    username: str
+
     hashed_password: str
 
     class Config:

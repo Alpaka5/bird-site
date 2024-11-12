@@ -8,22 +8,51 @@ from database import models, schemas
 from database.models import Language
 
 
-def get_user_by_email(db: Session, email: str) -> Row[models.User]:
+def get_user_by_email(db: Session, email: str) -> models.User | None:
     """
     Gets single user by email
 
     @param db: Session to database
     @param email: Email address of user
-    @return:
+    @return: models.User object or None if not present in database
     """
-    return db.execute(select(models.User).where(models.User.email == email)).first()
+    user = db.execute(select(models.User).where(models.User.email == email)).first()
+    if user:
+        return user[0]
+    else:
+        return None
+
+
+def get_user_by_id(db: Session, id: int) -> models.User | None:
+    user = db.get(models.User, id)
+    return user
 
 
 def create_user(db: Session, user: schemas.UserCreate) -> models.User:
     user_obj = models.User(
-        email=user.email, hashed_password=hash.bcrypt.hash(user.hashed_password)
+        username=user.username,
+        email=user.email,
+        hashed_password=hash.bcrypt.hash(user.hashed_password),
     )
     db.add(user_obj)
     db.commit()
     db.refresh(user_obj)
     return user_obj
+
+
+def authenticate_user(db: Session, email: str, password: str) -> models.User | None:
+    """
+    Authenticates user by email and password, returns None if user is not authenticated
+    @param db: Session to database
+    @param email: email of user
+    @param password: password of user
+    @return: Row[models.User] object when authentication was successful or None otherwise
+    """
+    user: models.User = get_user_by_email(email=email, db=db)
+    if not user:
+        return None
+
+    if not user.verify_password(password):
+        return None
+
+    return user
