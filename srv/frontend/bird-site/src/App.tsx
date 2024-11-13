@@ -3,7 +3,7 @@ import {useState, createContext} from 'react'
 import './App.css'
 import './styles/base.css'
 import './styles/quiz_styles.css'
-import MainCommandMenu from './components/maincommandmenu.tsx'
+import MainCommandMenu from './components/mainCommandMenu.tsx'
 import QuizWindow from './components/quiz/quizWindow.tsx'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {UserProvider} from "./context/userContext.tsx";
