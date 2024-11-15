@@ -1,11 +1,23 @@
 import Register from "./register.tsx"
-import {useState} from "react";
-export default function UserMenu(){
+import {useContext, useState} from "react";
+import {UserContext} from "../../context/userContext.tsx";
+
+export default function UserMenu() {
     const [registerOpen, setRegisterOpen] = useState(false);
-    return(
-        <div onClick={() => setRegisterOpen(!registerOpen)}>
+    const [token, setToken] = useContext(UserContext);
+    const registerOnClickAction = () => {
+        let registerDoc = document.getElementById("register-popup");
+        registerDoc.hidden = false;
+        setTimeout(function () {
+            registerDoc.classList.replace("popup-hidden", "popup-shown");
+        }, 10)
+
+    };
+
+    return (
+        <div onClick={() => registerOnClickAction()}>
             Profile!!
-            {registerOpen && <Register/>}
+            {token || <Register/>}
         </div>
     )
 }

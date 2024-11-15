@@ -1,7 +1,7 @@
 from typing import Sequence
 
 from sqlalchemy.orm import Session
-from sqlalchemy import select, and_, Row
+from sqlalchemy import select, or_
 from passlib import hash
 
 from database import models, schemas
@@ -19,6 +19,27 @@ def get_user_by_email(db: Session, email: str) -> models.User | None:
     user = db.execute(select(models.User).where(models.User.email == email)).first()
     if user:
         return user[0]
+    else:
+        return None
+
+
+def get_user_by_email_or_username(
+    db: Session, email: str, username: str
+) -> models.User | None:
+    """
+    Gets users by either email or username
+
+    @param db: Session to database
+    @param email: Email address of user
+    @return: models.User object or None if not present in database
+    """
+    users = db.execute(
+        select(models.User).where(
+            or_(models.User.email == email, models.User.username == username)
+        )
+    ).first()
+    if users:
+        return users
     else:
         return None
 

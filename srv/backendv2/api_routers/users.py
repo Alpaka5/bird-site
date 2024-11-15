@@ -23,9 +23,11 @@ def create_token(user: models.User) -> dict:
 
 @router.post("/create")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)) -> dict:
-    db_user = users_crud.get_user_by_email(db=db, email=user.email)
+    db_user = users_crud.get_user_by_email_or_username(
+        db=db, email=user.email, username=user.username
+    )
     if db_user:
-        raise HTTPException(status_code=400, detail="Email already in use")
+        raise HTTPException(status_code=400, detail="Email or username already in use")
 
     user = users_crud.create_user(
         db=db,
