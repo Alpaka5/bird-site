@@ -24,7 +24,7 @@ def create_token(user: models.User) -> dict:
 @router.post("/create")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)) -> dict:
     db_user = users_crud.get_user_by_email_or_username(
-        db=db, email=user.email, username=user.username
+        db=db, email=user.email.lower(), username=user.username
     )
     if db_user:
         raise HTTPException(status_code=400, detail="Email or username already in use")
@@ -37,14 +37,16 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)) -> dict
     return create_token(user)
 
 
-@router.post("/token")
+@router.post(
+    "/token",
+)
 def generate_token(
     form_data: security.OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
     user: models.User = users_crud.authenticate_user(
         db,
-        form_data.username,
+        form_data.username.lower(),
         form_data.password,
     )
 

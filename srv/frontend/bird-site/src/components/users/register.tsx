@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {SyntheticEvent, useContext, useState} from "react";
 import "../../styles/user_styles.css"
 import {UserContext} from "../../context/userContext.tsx";
 
@@ -23,20 +23,23 @@ export default function Register() {
 
         if (!response.ok) {
             setErrorMessage(data.detail);
-        } else{
+        } else {
             setToken(data.access_token);
             setErrorMessage('');
             let registerDoc = document.getElementById("register-popup");
-            registerDoc.classList.replace("popup-shown", "popup-hidden");
+            if (registerDoc) {
+                registerDoc.classList.replace("popup-shown", "popup-hidden");
 
-            setTimeout(function () {
-                registerDoc.hidden = true;
-            }, 200)
+                setTimeout(function () {
+                    registerDoc.hidden = true;
+                }, 200)
+            }
+
 
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
         if (password === confirmationPassword && password.length > 2) {
             submitRegistration();
@@ -51,50 +54,56 @@ export default function Register() {
         <>
             <div id="register-popup" className="full-screen-center-popup  popup-hidden" hidden>
                 <div className="register-grid">
-                <div className="text-left">
-                    Create your Bird Quiz! user account.
-                    <br/>
-                    Please input your username, email and password
-                </div>
-                <form className="register-form" onSubmit={handleSubmit}>
-                    <div>
-                        <label>Username</label>
-                        <div>
-                            <input type="text" placeholder="Enter username" value={username}
-                                   onChange={(e) => setUsername(e.target.value)}/>
-                        </div>
+                    <div className="text-left">
+                        Create your Bird Quiz! user account.
+                        <br/>
+                        Please input your username, email and password
+                        <div onClick={() => {
+                            let registerDoc = document.getElementById("register-popup");
+                            if (registerDoc) {
+                                registerDoc.hidden = true;
+                            }
+                        }}>Exit</div>
                     </div>
-                    <br/>
-                    <div>
-                        <label>Email Address</label>
+                    <form className="register-form" onSubmit={handleSubmit}>
                         <div>
-                            <input type="email" placeholder="Enter email" value={email}
-                                   onChange={(e) => setEmail(e.target.value)}/>
+                            <label>Username</label>
+                            <div>
+                                <input type="text" placeholder="Enter username" value={username}
+                                       onChange={(e) => setUsername(e.target.value)}/>
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    <div>
-                        <label>Password</label>
+                        <br/>
                         <div>
-                            <input type="password" placeholder="Enter password" value={password}
-                                   onChange={(e) => setPassword(e.target.value)}/>
+                            <label>Email Address</label>
+                            <div>
+                                <input type="email" placeholder="Enter email" value={email}
+                                       onChange={(e) => setEmail(e.target.value)}/>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <label>Confirm password</label>
+                        <br/>
                         <div>
-                            <input type="password" placeholder="Confirm password" value={confirmationPassword}
-                                   onChange={(e) => setConfirmationPassword(e.target.value)}/>
+                            <label>Password</label>
+                            <div>
+                                <input type="password" placeholder="Enter password" value={password}
+                                       onChange={(e) => setPassword(e.target.value)}/>
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    <button className="" type="submit">
-                        Register
-                    </button>
-                    <div className="text-red-600">{errorMessage}</div>
-                </form>
+                        <div>
+                            <label>Confirm password</label>
+                            <div>
+                                <input type="password" placeholder="Confirm password" value={confirmationPassword}
+                                       onChange={(e) => setConfirmationPassword(e.target.value)}/>
+                            </div>
+                        </div>
+                        <br/>
+                        <button className="" type="submit">
+                            Register
+                        </button>
+                        <div className="text-red-600">{errorMessage}</div>
+                    </form>
 
-                    </div>
+                </div>
 
             </div>
         </>

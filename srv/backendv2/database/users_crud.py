@@ -52,7 +52,7 @@ def get_user_by_id(db: Session, id: int) -> models.User | None:
 def create_user(db: Session, user: schemas.UserCreate) -> models.User:
     user_obj = models.User(
         username=user.username,
-        email=user.email,
+        email=user.email.lower(),
         hashed_password=hash.bcrypt.hash(user.hashed_password),
     )
     db.add(user_obj)

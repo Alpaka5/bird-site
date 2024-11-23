@@ -1,23 +1,55 @@
 import Register from "./register.tsx"
-import {useContext, useState} from "react";
-import {UserContext} from "../../context/userContext.tsx";
+import Login from "./login.tsx"
+import {useContext} from "react";
+import {UserContext, UserDetailsContext} from "../../context/userContext.tsx";
 
 export default function UserMenu() {
-    const [registerOpen, setRegisterOpen] = useState(false);
     const [token, setToken] = useContext(UserContext);
+    const [userDetails,] = useContext(UserDetailsContext);
     const registerOnClickAction = () => {
         let registerDoc = document.getElementById("register-popup");
-        registerDoc.hidden = false;
-        setTimeout(function () {
-            registerDoc.classList.replace("popup-hidden", "popup-shown");
-        }, 10)
+        if (registerDoc) {
+            registerDoc.hidden = false;
+            setTimeout(function () {
+                registerDoc.classList.replace("popup-hidden", "popup-shown");
+            }, 10)
+        }
+
 
     };
 
+    const loginOnClickAction = () => {
+        let loginDoc = document.getElementById("login-popup");
+        if (loginDoc) {
+            loginDoc.hidden = false;
+            setTimeout(function () {
+                loginDoc.classList.replace("popup-hidden", "popup-shown");
+            }, 10)
+        }
+
+
+    };
+
+    const logoutAction = () => {
+        setToken("xd");
+    }
+
+    if (userDetails) {
+        return (
+            <div>
+                {userDetails.username}
+                <div onClick={() => logoutAction()}>Logout</div>
+            </div>)
+
+    }
+
     return (
-        <div onClick={() => registerOnClickAction()}>
-            Profile!!
-            {token || <Register/>}
+        <div>
+            <div onClick={() => registerOnClickAction()}>Register</div>
+            <div onClick={() => loginOnClickAction()}>Login</div>
+            <Register/>
+            <Login/>
+
         </div>
     )
 }
