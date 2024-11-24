@@ -49,21 +49,30 @@ export default function Register() {
 
     }
 
+    const exitRegisterForm = () => {
+        let registerDoc = document.getElementById("register-popup");
+        if (registerDoc) {
+            registerDoc.classList.replace("popup-shown", "popup-hidden");
+            setTimeout(function () {
+
+                registerDoc.hidden = true;
+            }, 200)
+        }
+    }
+
 
     return (
         <>
             <div id="register-popup" className="full-screen-center-popup  popup-hidden" hidden>
-                <div className="register-grid">
-                    <div className="text-left">
-                        Create your Bird Quiz! user account.
-                        <br/>
-                        Please input your username, email and password
-                        <div onClick={() => {
-                            let registerDoc = document.getElementById("register-popup");
-                            if (registerDoc) {
-                                registerDoc.hidden = true;
-                            }
-                        }}>Exit</div>
+                <div className="popup-flex form-text">
+                    <div className="flex flex-col justify-evenly">
+                        <div className="text-left ">
+                            Create your <span className="font-fantasy">Bird Quiz!</span> user account.
+                            <br/>
+                            Please input your username, email and password
+
+                        </div>
+                        <div className="exit-button" onClick={exitRegisterForm}>Exit</div>
                     </div>
                     <form className="register-form" onSubmit={handleSubmit}>
                         <div>
@@ -89,6 +98,7 @@ export default function Register() {
                                        onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                         </div>
+                        <br/>
                         <div>
                             <label>Confirm password</label>
                             <div>
@@ -100,10 +110,11 @@ export default function Register() {
                         <button className="" type="submit">
                             Register
                         </button>
-                        <div className="text-red-600">{errorMessage}</div>
+                        <div className="text-red-600 max-w-80">{errorMessage}</div>
                     </form>
 
                 </div>
+
 
             </div>
         </>

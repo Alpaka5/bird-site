@@ -12,17 +12,17 @@
 
 }
 
-.register-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.popup-flex {
+    display: flex;
     background-color: #b3ddff;
     padding: 1.5rem;
     border-radius: calc(var(--radius) - 2px);
     border-width: 0.5rem;
     border-color: #58a0fd;
     column-gap: 5rem;
-    width: 50%;
-    justify-content: left;
+    width: 60%;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .popup-hidden {
@@ -42,9 +42,63 @@
 }
 
 .register-form input {
-    background-color: white;
+    background-color: #ffffff;
+    padding: 0.5rem;
+    outline-color: #58a0fd;
+}
+
+.register-form input:focus {
+    background-color: #fff12e;
+    border:none;
+    padding: 0.5rem;
+    outline-offset: -2px;
+    outline-style: solid;
+    outline-width: 2px;
+    transition: all 0.3s, outline-width 0.1s, outline-offset 0.1s;
 }
 
 .register-form button {
-    background-color: #fff12e;;
+    background-color: #fff12e;
+    outline-color: #fff12e;
+    outline-offset: -4px;
+    outline-style: solid;
+    outline-width: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 600;
+}
+
+.register-form button:hover {
+    background-color: #58a0fd;
+    transition: 0.2s;
+
+}
+
+.form-text {
+    font-family: sans-serif;
+    font-size: 1.25rem;
+
+}
+
+.exit-button {
+    background-color: #fff12e;
+    border-radius: 0.75rem;
+    width: max-content;
+    height: max-content;
+    font-size: 1rem;
+    font-family: sans-serif;
+    font-weight: 800;
+    padding: 0.5rem 1rem;
+    justify-self: start;
+    outline-color: #fff12e;
+    outline-offset: -4px;
+    outline-style: solid;
+    outline-width: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.exit-button:hover {
+    background-color: #58a0fd;
+    transition: 0.2s;
 }

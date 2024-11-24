@@ -7,7 +7,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const [token, setToken] = useContext(UserContext);
+    const [, setToken] = useContext(UserContext);
 
     const submitLogin = async () => {
         const requestOptions = {
@@ -23,36 +23,44 @@ export default function Login() {
             setToken(data.access_token);
             setErrorMessage('');
             let loginDoc = document.getElementById("login-popup");
-            if (loginDoc){
-            loginDoc.classList.replace("popup-shown", "popup-hidden");
+            if (loginDoc) {
+                loginDoc.classList.replace("popup-shown", "popup-hidden");
 
-            setTimeout(function () {
-                loginDoc.hidden = true;
-            }, 200)
+                setTimeout(function () {
+                    loginDoc.hidden = true;
+                }, 200)
             }
         }
     }
 
-    const handleSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent> ) => {
+    const handleSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
         submitLogin();
-        console.log(token);
+    }
+
+    const exitLoginForm = () => {
+        let loginDoc = document.getElementById("login-popup");
+        if (loginDoc) {
+
+            loginDoc.classList.replace("popup-shown", "popup-hidden");
+            setTimeout(function () {
+                loginDoc.hidden = true;
+            }, 200)
+        }
     }
 
     return (
         <>
             <div id="login-popup" className="full-screen-center-popup  popup-hidden" hidden>
-                <div className="register-grid">
-                    <div className="text-left">
-                        Login to your Bird Quiz! user account.
-                        <br/>
-                        Please input your email and password!
-                        <div onClick={() => {
-                            let loginDoc = document.getElementById("login-popup");
-                            if (loginDoc) {
-                                loginDoc.hidden = true;
-                            }
-                        }}>Exit</div>
+                <div className="popup-flex form-text">
+                    <div className="flex flex-col justify-evenly">
+                        <div className="text-left">
+                            Login to your <span className="font-fantasy">Bird Quiz!</span> user account.
+                            <br/>
+                            Please input your email and password!
+
+                        </div>
+                        <div className="exit-button" onClick={exitLoginForm}>Exit</div>
                     </div>
                     <form className="register-form" onSubmit={handleSubmit}>
                         <div>
@@ -74,7 +82,7 @@ export default function Login() {
                         <button className="" type="submit">
                             Login
                         </button>
-                        <div className="text-red-600">{errorMessage}</div>
+                        <div className="text-red-600 max-w-80">{errorMessage}</div>
                     </form>
 
                 </div>

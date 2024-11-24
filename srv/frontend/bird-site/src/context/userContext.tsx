@@ -3,10 +3,7 @@ import {userDetailsType} from "../components/types/userData.tsx";
 
 export const UserContext = createContext<[string | null, Dispatch<SetStateAction<string | null>>]>([null, () => {
 }]);
-export const UserDetailsContext = createContext<[userDetailsType, Dispatch<SetStateAction<userDetailsType>>]>([{
-    username: null,
-    email: null
-}, () => {
+export const UserDetailsContext = createContext<[userDetailsType | null, Dispatch<SetStateAction<userDetailsType | null>>]>([null, () => {
 }]);
 
 
@@ -14,7 +11,7 @@ export function UserProvider(props: {
     children: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined;
 }) {
     const [token, setToken] = useState<string | null>(localStorage.getItem("userToken"))
-    const [userDetails, setUserDetails] = useState<userDetailsType>({username: null, email: null})
+    const [userDetails, setUserDetails] = useState<userDetailsType | null>(null)
     useEffect(() => {
         const fetchUser = async () => {
             const requestOptions = {
@@ -24,9 +21,7 @@ export function UserProvider(props: {
                     Authorization: "Bearer " + token
                 }
             };
-            console.log("HERE COMES THE ERROR!");
             const response = await fetch("http://localhost:5000/users/me", requestOptions)
-            console.log("This is never executed");
             const data = await response.json();
             // We check what user is "logged in", if response is not ok, this means that token is not valid
             // and we can remove it and proceed as user is not logged in and token is empty

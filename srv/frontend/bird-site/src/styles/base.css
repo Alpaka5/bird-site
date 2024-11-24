@@ -9,7 +9,7 @@
 .main-command-menu {
     display: grid;
     grid-template-columns: minmax(0,1fr) minmax(0,4fr) minmax(0,1fr);
-
+    height: 100%;
 
 }
 
@@ -48,6 +48,19 @@
     background-color: #fff12e;
 }
 
+.nav-menu-text-small {
+    font-family: "serif";
+    color: #fff12e;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-menu-text-small:hover {
+    color: #58a0fd;
+    font-size: 1.75rem;
+}
+
 .bird-description-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -56,4 +69,9 @@
 
 .bird-description-panel {
     grid-column: span 2;
+}
+
+.font-fantasy {
+    font-family: "fantasy";
+    color: #fff12e;
 }
