@@ -55,4 +55,5 @@ npm i @tanstack/react-query
 npm install axios
 npx shadcn@latest add command
 npx shadcn@latest add button
-npx shadcn@latest add navigation-menu
+npx shadcn@latest add dropdown-menu
+npx shadcn@latest add avatar

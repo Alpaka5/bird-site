@@ -21,6 +21,7 @@
     color: #fff12e;
     background-color: #58a0fd;
     font-size: 2.25rem; /* 36px */
+    cursor: default;
 }
 
 .nav-menu-text {

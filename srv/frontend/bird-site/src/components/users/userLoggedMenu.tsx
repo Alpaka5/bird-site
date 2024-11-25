@@ -2,14 +2,16 @@ import {useContext} from "react";
 import {UserContext} from "../../context/userContext.tsx";
 import {userDetailsType} from "../types/userData.tsx";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "../ui/navigation-menu"
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
+import * as React from "react";
+
 
 export default function UserLoggedMenu(userDetails: userDetailsType) {
     const [, setToken] = useContext(UserContext);
@@ -19,22 +21,20 @@ export default function UserLoggedMenu(userDetails: userDetailsType) {
 
 
     return (
-
-
-            <NavigationMenu>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>{userDetails.username}</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul>
-                            <li onClick={logoutAction}>
-                                Logout
-                            </li>
-                        </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-            </NavigationMenu>
-
-
+        <DropdownMenu>
+            <DropdownMenuTrigger className="logged-in-tile">
+                <div><Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png"/>
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar></div>
+                <div>{userDetails.username}</div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="logged-in-menu">
+                <DropdownMenuLabel >My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator className="logged-in-separator"/>
+                <DropdownMenuItem onClick={logoutAction}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     )
 
 }
