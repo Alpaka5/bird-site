@@ -49,7 +49,7 @@
 
 .register-form input:focus {
     background-color: #fff12e;
-    border:none;
+    border: none;
     padding: 0.5rem;
     outline-offset: -2px;
     outline-style: solid;
@@ -109,7 +109,8 @@
     height: fit-content;
     justify-content: space-evenly;
     gap: 0.5rem;
-    outline-style: none!important;
+    outline-style: none !important;
+    border-style: none;
     align-items: center;
     justify-self: center;
     align-self: center;
@@ -121,24 +122,21 @@
 }
 
 
-
-.logged-in-tile:hover, .logged-in-tile[data-state="open"]{
+.logged-in-tile:hover, .logged-in-tile[data-state="open"] {
     outline-color: #fff12e;
     outline-offset: -4px;
-    outline-style: solid!important;;
+    outline-style: solid !important;;
     outline-width: 4px;
     background-color: #b3ddff;
     transition: background-color 0.2s, outline-width 0.2s;
-
 }
 
-.logged-in-menu{
+.logged-in-menu {
     background-color: #b3ddff;
-
     color: #fff12e;
     font-family: sans-serif;
 }
 
-.logged-in-separator{
+.logged-in-separator {
     background-color: #fff12e;
 }

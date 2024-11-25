@@ -177,3 +177,15 @@ class UserProfile(Base):
     )
 
     user: Mapped["User"] = relationship(back_populates="user_profile")
+
+
+class Role(Base):
+    __tablename__ = "role"
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    role_name: Mapped[str] = mapped_column(index=True)
+
+
+class UserRole(Base):
+    __tablename__ = "userrole"
+    user_id: Mapped[str] = mapped_column(ForeignKey("user.id"), primary_key=True)
+    role_id: Mapped[str] = mapped_column(ForeignKey("role.id"), primary_key=True)

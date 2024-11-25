@@ -30,7 +30,7 @@ export default function UserLoggedMenu(userDetails: userDetailsType) {
                 <div>{userDetails.username}</div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="logged-in-menu">
-                <DropdownMenuLabel >My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator className="logged-in-separator"/>
                 <DropdownMenuItem onClick={logoutAction}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
