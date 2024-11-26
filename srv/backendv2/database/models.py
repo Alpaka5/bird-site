@@ -159,9 +159,21 @@ class User(Base):
     hashed_password: Mapped[str]
 
     user_profile: Mapped["UserProfile"] = relationship(back_populates="user")
+    user_roles: Mapped[List["UserRole"]] = relationship(back_populates="user")
 
     def verify_password(self, password: str):
         return hash.bcrypt.verify(password, self.hashed_password)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "user_roles": [
+                {"id": single_role.role_id, "name": single_role.role.role_name}
+                for single_role in self.user_roles
+            ],
+        }
 
 
 class UserProfile(Base):
@@ -183,9 +195,12 @@ class Role(Base):
     __tablename__ = "role"
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     role_name: Mapped[str] = mapped_column(index=True)
+    user_roles: Mapped[List["UserRole"]] = relationship(back_populates="role")
 
 
 class UserRole(Base):
     __tablename__ = "userrole"
-    user_id: Mapped[str] = mapped_column(ForeignKey("user.id"), primary_key=True)
-    role_id: Mapped[str] = mapped_column(ForeignKey("role.id"), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), primary_key=True)
+    role_id: Mapped[int] = mapped_column(ForeignKey("role.id"), primary_key=True)
+    user: Mapped["User"] = relationship(back_populates="user_roles")
+    role: Mapped["Role"] = relationship(back_populates="user_roles")

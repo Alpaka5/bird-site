@@ -53,6 +53,10 @@ class User(_UserBase):
         from_attributes = True
 
 
+class UserWithRoles(User):
+    user_roles: list[dict]
+
+
 class _LeadBase(BaseModel):
     first_name: str
     last_name: str

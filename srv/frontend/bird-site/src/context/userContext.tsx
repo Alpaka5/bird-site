@@ -29,7 +29,7 @@ export function UserProvider(props: {
                 setToken(null);
                 setUserDetails(null)
             } else {
-                setUserDetails({username: data.username, email: data.email})
+                setUserDetails({username: data.username, email: data.email, user_roles: data.user_roles})
             }
 
 

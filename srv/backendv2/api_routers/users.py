@@ -1,6 +1,7 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, security
 import jwt
-from sqlalchemy import Row
 
 from sqlalchemy.orm import Session
 
@@ -56,11 +57,11 @@ def generate_token(
     return create_token(user)
 
 
-@router.get("/me", response_model=schemas.User)
+@router.get("/me", response_model=schemas.UserWithRoles)
 def get_current_user(
     db: Session = Depends(get_db),
     token: str = Depends(oauth2schema),
-) -> schemas.User:
+) -> schemas.UserWithRoles:
     """
     Gets current user
     @param db: Session to database
@@ -72,8 +73,8 @@ def get_current_user(
         payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
     except jwt.exceptions.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid Token")
-    user = users_crud.get_user_by_id(db=db, id=payload["id"])
+    user: models.User = users_crud.get_user_by_id(db=db, id=payload["id"])
     if not user:
         raise HTTPException(status_code=401, detail="Invalid Email or Password")
 
-    return schemas.User.model_validate(user)
+    return schemas.UserWithRoles.model_validate(user.to_dict())

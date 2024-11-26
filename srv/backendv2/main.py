@@ -1,11 +1,9 @@
-import logging
-
-from fastapi import FastAPI, security
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 
-from database.database import SessionLocal, engine
-from database import models, schemas
+from database.database import engine
+from database import models
 from api_routers import birds, quiz, users
 
 models.Base.metadata.create_all(bind=engine)

@@ -58,6 +58,9 @@ def create_user(db: Session, user: schemas.UserCreate) -> models.User:
     db.add(user_obj)
     db.commit()
     db.refresh(user_obj)
+
+    user_role_obj = models.UserRole(user_id=user_obj.id, role_id=2)
+
     return user_obj
 
 
