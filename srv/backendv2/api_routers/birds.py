@@ -1,3 +1,5 @@
+import os
+
 import openpyxl
 from fastapi import APIRouter, UploadFile, HTTPException, Depends
 from fastapi.responses import FileResponse
@@ -85,13 +87,42 @@ def update_db_with_birds(file: UploadFile, db: Session = Depends(get_db)):
 
 @router.get("/image/{bird_latin_name}")
 def get_bird_image(bird_latin_name):
-    return FileResponse(
-        f"assets/images/{bird_latin_name.replace(' ','_')}.png", media_type="image/png"
+    for image_extension, mime_type in {
+        "png": "png",
+        "jpg": "jpeg",
+        "jpeg": "jpeg",
+    }.items():
+        file_path = (
+            f"assets/images/{bird_latin_name.replace(' ','_')}.{image_extension}"
+        )
+        if os.path.isfile(file_path):
+            return FileResponse(
+                file_path,
+                media_type=f"image/{mime_type}",
+            )
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"Image of bird {bird_latin_name} not found.",
     )
 
 
 @router.get("/sound/{bird_latin_name}")
-def get_bird_image(bird_latin_name):
-    return FileResponse(
-        f"assets/sounds/{bird_latin_name.replace(' ','_')}.m4a", media_type="audio/m4a"
+def get_bird_sound(bird_latin_name):
+    for sound_extension, mime_type in {
+        "m4a": "m4a",
+        "mp3": "mpeg",
+    }.items():
+        file_path = (
+            f"assets/sounds/{bird_latin_name.replace(' ','_')}.{sound_extension}"
+        )
+        if os.path.isfile(file_path):
+            return FileResponse(
+                file_path,
+                media_type=f"sound/{mime_type}",
+            )
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"Sound of bird {bird_latin_name} not found.",
     )

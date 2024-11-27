@@ -34,19 +34,7 @@ export default function AdminPanel() {
                     </div>
 
                 </div>
-                <div className="col-end-2">
-                    <label>Polish bird name</label>
-                    <div>
-                        <input type="text" placeholder="Enter polish bird name"/>
-                    </div>
 
-                </div>
-                <div className="col-end-2">
-                    <label>English bird name</label>
-                    <div>
-                        <input type="text" placeholder="Enter english bird name"/>
-                    </div>
-                </div>
                 <div className="row-start-1 col-start-2">
 
                     <label>Bird photo</label>
@@ -59,7 +47,7 @@ export default function AdminPanel() {
 
                     <label>Bird sound file</label>
                     <div>
-                        <input type="file" id="bird-sound-admin" name="bird-sound-admin" accept="audio/mpeg"/>
+                        <input type="file" id="bird-sound-admin" name="bird-sound-admin" accept="audio/mpeg, audio/m4a"/>
                     </div>
 
                 </div>

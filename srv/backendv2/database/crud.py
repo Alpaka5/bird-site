@@ -45,3 +45,14 @@ def get_bird_text_field(db: Session, bird_latin_name: str, language_id: str):
             )
         )
     ).first()
+
+
+def add_bird(
+    db: Session,
+    bird: schemas.Bird,
+):
+    bird_model = models.Bird(**bird.model_dump())
+    db.add(bird_model)
+    db.commit()
+    db.refresh(bird_model)
+    return bird_model

@@ -175,6 +175,12 @@ class User(Base):
             ],
         }
 
+    def get_roles(self):
+        return [
+            {"id": single_role.role_id, "name": single_role.role.role_name}
+            for single_role in self.user_roles
+        ]
+
 
 class UserProfile(Base):
     __tablename__ = "userprofile"
