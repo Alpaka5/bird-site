@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database.database import engine
 from database import models
-from api_routers import birds, quiz, users
+from api_routers import birds, quiz, users, admin
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -12,6 +12,7 @@ app = FastAPI()
 app.include_router(birds.router)
 app.include_router(quiz.router)
 app.include_router(users.router)
+app.include_router(admin.router)
 
 # Dependency
 origins = [

@@ -1,4 +1,7 @@
-from pydantic import BaseModel
+import json
+
+from fastapi import UploadFile
+from pydantic import BaseModel, model_validator
 import datetime as dt
 
 
@@ -12,6 +15,15 @@ class Bird(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class BirdUpload(Bird):
+    @model_validator(mode="before")
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
 
 
 class BirdDetailed(Bird):

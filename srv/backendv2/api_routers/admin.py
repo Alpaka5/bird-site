@@ -13,14 +13,7 @@ from helper.logger import logger
 router = APIRouter(prefix="/admin")
 
 
-@router.post("/add_bird/basic")
-def add_bird(
-    bird_data: schemas.Bird,
-    bird_image_file: UploadFile,
-    bird_sound_file: UploadFile,
-    db: Session = (Depends(get_db)),
-    token: str = Depends(oauth2schema),
-):
+def _validate_admin_rights(db: Session, token: str):
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
     except jwt.exceptions.PyJWTError:
@@ -33,25 +26,46 @@ def add_bird(
     except:
         raise HTTPException(401)
 
+
+@router.post("/add_bird/basic")
+async def add_bird(
+    bird_data: schemas.BirdUpload,
+    bird_image_file: UploadFile,
+    bird_sound_file: UploadFile,
+    db: Session = (Depends(get_db)),
+    token: str = Depends(oauth2schema),
+):
+    _validate_admin_rights(db=db, token=token)
+
     if bird_image_file.content_type not in ["image/png", "image/jpeg"]:
         raise HTTPException(
             400,
             detail="Invalid image file type. Acceptable values are image/png, image/jpeg",
         )
 
-    if bird_sound_file.content_type not in ["audio/mpeg", "audio/m4a"]:
+    if bird_sound_file.content_type not in ["audio/mpeg", "audio/m4a", "audio/x-m4a"]:
         raise HTTPException(
             400,
-            detail="Invalid sound file type. Acceptable values are audio/mpeg and audio/m4a",
+            detail="Invalid sound file type. Acceptable values are audio/mpeg, audio/x-m4a and audio/m4a",
         )
 
     # First we add bird to database
     crud.add_bird(db=db, bird=bird_data)
 
     # Then we save image
-
-    image_out_file_name = (
-        f"{bird_data.latin_name.replace(' ', '_')}.{bird_image_file.filename}"
+    image_extension = bird_image_file.filename.split(".")[-1]
+    image_path = "./assets/images"
+    image_out_file_name = f"{bird_data.latin_name.replace(' ', '_')}.{image_extension}"
+    await file_parser.save_file(
+        path=image_path, output_name=image_out_file_name, in_file=bird_image_file
     )
-    file_parser.save_file(output_name=image_out_file_name, in_file=bird_image_file)
+
+    # Then sound
+    sound_extension = bird_sound_file.filename.split(".")[-1]
+    sound_path = "./assets/sounds"
+    sound_out_file_name = f"{bird_data.latin_name.replace(' ', '_')}.{sound_extension}"
+    await file_parser.save_file(
+        path=sound_path, output_name=sound_out_file_name, in_file=bird_sound_file
+    )
+
     return {"message": "Bird added"}
