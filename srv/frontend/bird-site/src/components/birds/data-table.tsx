@@ -79,8 +79,10 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
-                                    onClick={() => setMainWindowState(<BirdDescriptionWindow
-                                        selectedBird={convertRowToBirdEntry(row)}/>)}
+                                    onClick={() => {
+
+                                        setMainWindowState(<BirdDescriptionWindow
+                                        selectedBird={data[row.id]}/>)}}
                                 >
 
                                     {row.getVisibleCells().map((cell) => (

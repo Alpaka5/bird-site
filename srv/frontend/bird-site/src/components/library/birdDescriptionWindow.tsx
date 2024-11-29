@@ -10,6 +10,7 @@ import LibraryWindow from "./libraryWindow.tsx";
 
 
 export default function BirdDescriptionWindow({selectedBird}: { selectedBird: BirdEntry }) {
+    console.log(selectedBird)
     const postQuery = useQuery({
         queryKey: [`bird_description_${selectedBird.latin_name}`],
         queryFn: async () => {
@@ -22,11 +23,19 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
 
     const setMainWindowState: Function = useContext(SetMainWindowContext);
 
+    const nameTranslationsList = []
+    for (const nameTranslation of selectedBird.name_translations) {
+        nameTranslationsList.push(<div className="font-bold text-xl font-serif">
+            <span className="italic">{nameTranslation.language}:</span> {nameTranslation.name}
+        </div>)
+    }
+
     return (
         <div className="flex flex-column w-full h-full items-center justify-center">
             <div className="grid grid-cols-2 justify-evenly gap-4 library-bird-description ">
                 <div className="place-content-center text-start p-5">
                     <div className="font-bold text-3xl font-serif">{selectedBird.latin_name}</div>
+                    {nameTranslationsList}
                     <div className="italic text-xl font-serif">{selectedBird.family}</div>
                     <div className="font-sans text-lg">Weight
                         [g]: {selectedBird.weight_min_g} - {selectedBird.weight_max_g}</div>

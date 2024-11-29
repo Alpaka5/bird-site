@@ -21,9 +21,11 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: bi
             <div className="place-content-center text-start">
                 <div className="font-bold text-3xl font-serif">{selectedBird.latin_name}</div>
                 <div className="font-bold text-xl font-serif">
-                    <span className="italic">pol:</span> {selectedBird.polish_name}</div>
-                <div className="font-bold text-xl font-serif"> <span
-                    className="italic">eng:</span> {selectedBird.english_name}</div>
+                    <span className="italic">pol:</span> {selectedBird.polish_name}
+                </div>
+                <div className="font-bold text-xl font-serif">
+                    <span className="italic">eng:</span> {selectedBird.english_name}
+                </div>
                 <div className="italic text-xl font-serif">{selectedBird.family}</div>
                 <div className="font-sans text-lg">Weight
                     [g]: {selectedBird.weight_min_g} - {selectedBird.weight_max_g}</div>

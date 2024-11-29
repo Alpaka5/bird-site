@@ -27,7 +27,8 @@ class BirdUpload(Bird):
 
 
 class BirdDetailed(Bird):
-
+    polish_name: str
+    english_name: str
     order: str
     suborder: str
     tags: list[str]
