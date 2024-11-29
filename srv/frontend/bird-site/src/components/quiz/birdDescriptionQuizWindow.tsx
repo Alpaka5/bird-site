@@ -2,10 +2,9 @@ import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import '../../styles/base.css'
 import '../../styles/quiz_styles.css'
-import {BirdEntry} from "../birds/columns.tsx";
-import {birdDescription} from "../types/birdResponsesType.tsx";
+import {birdDescription, birdDetailed} from "../types/birdResponsesType.tsx";
 
-export default function BirdDescriptionWindow({selectedBird}: { selectedBird: BirdEntry }) {
+export default function BirdDescriptionWindow({selectedBird}: { selectedBird: birdDetailed }) {
     const postQuery = useQuery({
         queryKey: [`bird_description_${selectedBird.latin_name}`],
         queryFn: async () => {
@@ -21,6 +20,10 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: Bi
         <div className="grid grid-cols-2  justify-evenly content-center gap-4">
             <div className="place-content-center text-start">
                 <div className="font-bold text-3xl font-serif">{selectedBird.latin_name}</div>
+                <div className="font-bold text-xl font-serif">
+                    <span className="italic">pol:</span> {selectedBird.polish_name}</div>
+                <div className="font-bold text-xl font-serif"> <span
+                    className="italic">eng:</span> {selectedBird.english_name}</div>
                 <div className="italic text-xl font-serif">{selectedBird.family}</div>
                 <div className="font-sans text-lg">Weight
                     [g]: {selectedBird.weight_min_g} - {selectedBird.weight_max_g}</div>

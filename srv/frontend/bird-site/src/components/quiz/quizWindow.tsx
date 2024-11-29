@@ -1,45 +1,21 @@
 import {useQuery, UseQueryResult} from "@tanstack/react-query";
-import axios, {post} from "axios";
+import axios from "axios";
 
 import {birdDetailed, responseQuiz} from "../types/quizGameResponseType.tsx"
 import {birdDescription} from "../types/birdResponsesType.tsx";
 import BirdDescriptionQuizWindow from "./birdDescriptionQuizWindow.tsx";
 import {createContext, useState} from "react";
-import {BirdEntry} from "../birds/columns.tsx";
-import AudioPlayer from "../ui/audioPlayer.tsx";
+
 
 export const SetQuizStateContext = createContext(() => {
 });
 
 function capitalizeFirstLetter(string: string) {
+    console.log(string);
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// function CollapsibleQuizAnswer(props: any) {
-//     const open = props.collapseState["value"];
-//
-//     function toggle(event: MouseEvent) {
-//         props.onClick(event);
-//     }
-//
-//
-//     return (
-//         <div className="w-1/2">
-//             <div id={props.id}
-//                  className=" bg-gray-300 p-5 rounded-xl  hover:outline-gray-500 hover:outline hover:outline-2"
-//                  onClick={(event) => {
-//                      toggle(event)
-//                  }}
-//                  data-winning={props.winning} data-label={props.label}>{props.label}</div>
-//             {open &&
-//                 <div>{props.children}</div>}
-//         </div>
-//     );
-// }
-
 function QuizAnswer({bird, onClick}: { bird: birdDetailed, collapseState: Object, onClick: Function }) {
-
-
     const postQuery = useQuery({
         queryKey: [`bird_description_${bird.latin_name}`],
         queryFn: async () => {
@@ -60,7 +36,7 @@ function QuizAnswer({bird, onClick}: { bird: birdDetailed, collapseState: Object
                  onClick(event)
              }}
              data-winning={bird.winning_bird}>
-            <span>{capitalizeFirstLetter(bird.latin_name)}</span>
+            <span>{capitalizeFirstLetter(bird.english_name)}</span>
         </div>
     )
 }

@@ -24,9 +24,10 @@ def get_bird_by_id(bird_latin_name: str, db: Session = Depends(get_db)):
         )
 
 
-@router.get("/all_birds", response_model=list[schemas.Bird])
+@router.get("/all_birds", response_model=list[schemas.BirdSemiDetailed])
 def get_all_birds(db: Session = Depends(get_db)):
     logger.info("DOWNLOADING BIRDS DATA")
+
     return crud.get_all_birds(db)
 
 

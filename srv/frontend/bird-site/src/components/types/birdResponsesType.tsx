@@ -1,5 +1,7 @@
 export type birdDetailed = {
     latin_name: string;
+    polish_name: string;
+    english_name: string;
     length_min_mm: number;
     length_max_mm: number;
     weight_min_g: number;

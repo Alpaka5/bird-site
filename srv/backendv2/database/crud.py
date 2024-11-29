@@ -25,6 +25,7 @@ def get_all_birds_names(db: Session) -> list[Row]:
 
 
 def get_all_birds(db: Session):
+
     return db.scalars(select(models.Bird)).all()
 
 
@@ -54,17 +55,27 @@ def add_bird_full(
     bird_translated_name_english: schemas.BirdTranslatedName,
     bird_translated_name_polish: schemas.BirdTranslatedName,
 ):
+    bird.latin_name = bird.latin_name.lower()
+    bird.family = bird.family.lower()
     bird_model = models.Bird(**bird.model_dump())
     db.add(bird_model)
 
+    bird_description_data.bird = bird_description_data.bird.lower()
+    bird_description_data.language = bird_description_data.language.lower()
     bird_description_model = models.BirdTextField(**bird_description_data.model_dump())
     db.add(bird_description_model)
 
+    bird_translated_name_english.bird = bird_translated_name_english.bird.lower()
+    bird_translated_name_english.language = (
+        bird_translated_name_english.language.lower()
+    )
     bird_translated_name_english_model = models.BirdNameTranslation(
         **bird_translated_name_english.model_dump()
     )
     db.add(bird_translated_name_english_model)
 
+    bird_translated_name_polish.bird = bird_translated_name_polish.bird.lower()
+    bird_translated_name_polish.language = bird_translated_name_polish.language.lower()
     bird_translated_name_polish_model = models.BirdNameTranslation(
         **bird_translated_name_polish.model_dump()
     )

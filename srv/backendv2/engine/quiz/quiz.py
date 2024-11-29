@@ -41,6 +41,16 @@ class QuizGame:
     ) -> BirdDetailed:
         return BirdDetailed(
             latin_name=bird.latin_name,
+            english_name=[
+                name_translation.name
+                for name_translation in bird.name_translations
+                if name_translation.language == "eng"
+            ][0],
+            polish_name=[
+                name_translation.name
+                for name_translation in bird.name_translations
+                if name_translation.language == "pol"
+            ][0],
             length_min_mm=bird.length_min_mm,
             length_max_mm=bird.length_max_mm,
             weight_min_g=bird.weight_min_g,

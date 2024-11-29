@@ -27,6 +27,7 @@ class BirdUpload(Bird):
 
 
 class BirdDetailed(Bird):
+
     order: str
     suborder: str
     tags: list[str]
@@ -58,6 +59,13 @@ class BirdTranslatedName(BaseModel):
     bird: str
     language: str
     name: str
+
+
+class BirdSemiDetailed(Bird):
+    name_translations: list[BirdTranslatedName]
+
+    class Config:
+        from_attributes = True
 
 
 class BirdTranslatedNameUpload(BirdTranslatedName):

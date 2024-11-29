@@ -1,5 +1,10 @@
 import {ColumnDef} from "@tanstack/react-table"
 
+type BirdNameTranslations = {
+    language: string
+    name: string
+}
+
 export type BirdEntry = {
     latin_name: string
     family: string
@@ -7,6 +12,7 @@ export type BirdEntry = {
     length_max_mm: number
     weight_min_g: number
     weight_max_g: number
+    name_translations: BirdNameTranslations[]
 }
 
 export const columns: ColumnDef<BirdEntry>[] = [
