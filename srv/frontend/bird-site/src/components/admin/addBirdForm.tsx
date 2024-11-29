@@ -42,7 +42,6 @@ export default function AddBirdForm() {
     } = useForm<addBirdInputs>()
 
     const submitAddBird: SubmitHandler<addBirdInputs> = async (data) => {
-        const formData = new FormData()
         setValue("bird_translated_name_polish.language", "pol")
         setValue("bird_translated_name_english.language", "eng")
         setValue("bird_description_data.language", "eng")
@@ -50,6 +49,7 @@ export default function AddBirdForm() {
         setValue("bird_translated_name_english.bird", data.bird_data.latin_name)
         setValue("bird_translated_name_polish.bird", data.bird_data.latin_name)
 
+        const formData = new FormData()
         formData.append("bird_sound_file", data.bird_sound_file[0])
         formData.append("bird_image_file", data.bird_image_file[0])
         formData.append("bird_data", JSON.stringify(data.bird_data))

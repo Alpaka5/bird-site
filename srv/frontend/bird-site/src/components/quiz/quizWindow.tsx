@@ -93,11 +93,10 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
     }
 
     function startNewQuiz(event) {
+        quizQuery.refetch();
 
         let quizBirdSound: HTMLElement = document.getElementById("quiz_bird_sound")
-
-        quizBirdSound.pause()
-        quizBirdSound.currentTime = 0
+        quizBirdSound.load()
 
         let quizBirdDescription = document.getElementById("quiz-bird-description");
 
@@ -110,7 +109,7 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
 
         event.currentTarget.style.opacity = 0;
 
-        quizQuery.refetch();
+
         setAllAnswersCounter(allAnswersCounter + 1);
         setQuizAnswered(false);
         for (const single_bird of quizGame.birds) {
@@ -119,7 +118,17 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
             answer_item.classList.remove("button-red")
             answer_item.classList.remove("button-green")
         }
+
         setTimeout(function () {
+            quizBirdSound.load()
+
+        }, 500);
+
+        setTimeout(function () {
+            while (quizBirdSound.currentTime != 3){
+                console.log("PENTLA")
+                quizBirdSound.currentTime = 3;
+            }
             quizBirdSound.play();
         }, 1000);
 
@@ -138,8 +147,8 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
 
             </div>
 
-            <audio id="quiz_bird_sound" controlsList="nodownload" controls>
-                <source src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird}/>
+            <audio id="quiz_bird_sound" controlsList="nodownload" controls >
+                <source src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird +"#t=3"} />
             </audio>
             <button id="new_quiz_button" className="start-new-game-button m-1 "
                     onClick={(e: MouseEvent) => {

@@ -36,13 +36,15 @@ export default function BirdDescriptionWindow({selectedBird}: { selectedBird: bi
                            src={"http://localhost:5000/birds/sound/" + selectedBird.latin_name}></audio>
                 </div>
                 <br/>
-                <div className="font-sans text-lg">
-                    {postQuery.data.description}
-                </div>
+
             </div>
             <div className="flex justify-center">
                 <img src={'http://localhost:5000/birds/image/' + selectedBird.latin_name} alt="Image of bird"
                      className="description_image"/>
+            </div>
+
+            <div className="font-sans text-left text-lg overflow-scroll max-h-48 col-span-2">
+                {postQuery.data.description}
             </div>
 
         </div>
