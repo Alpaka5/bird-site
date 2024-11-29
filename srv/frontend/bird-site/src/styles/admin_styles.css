@@ -15,13 +15,13 @@
     text-align: left;
 }
 
-.admin-panel-form input {
+.admin-panel-form input, .admin-panel-form textarea {
     background-color: #ffffff;
     padding: 0.5rem;
     outline-color: #fff12e;
 }
 
-.admin-panel-form input:focus {
+.admin-panel-form input:focus, .admin-panel-form textarea:focus{
     background-color: #b3ddff;
     border: none;
     padding: 0.5rem;

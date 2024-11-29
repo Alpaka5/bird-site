@@ -1,5 +1,6 @@
 import jwt
 import openpyxl
+import sqlalchemy.exc as sqlExc
 from fastapi import APIRouter, UploadFile, HTTPException, Depends
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
@@ -22,7 +23,7 @@ def _validate_admin_rights(db: Session, token: str):
 
     try:
         if {"id": 1, "name": "admin"} not in user.get_roles():
-            raise HTTPException(403)
+            raise HTTPException(403, detail="")
     except:
         raise HTTPException(401)
 
@@ -30,6 +31,9 @@ def _validate_admin_rights(db: Session, token: str):
 @router.post("/add_bird/basic")
 async def add_bird(
     bird_data: schemas.BirdUpload,
+    bird_description_data: schemas.BirdTextFieldUpload,
+    bird_translated_name_english: schemas.BirdTranslatedNameUpload,
+    bird_translated_name_polish: schemas.BirdTranslatedNameUpload,
     bird_image_file: UploadFile,
     bird_sound_file: UploadFile,
     db: Session = (Depends(get_db)),
@@ -50,7 +54,19 @@ async def add_bird(
         )
 
     # First we add bird to database
-    crud.add_bird(db=db, bird=bird_data)
+    try:
+        crud.add_bird_full(
+            db=db,
+            bird=bird_data,
+            bird_description_data=bird_description_data,
+            bird_translated_name_english=bird_translated_name_english,
+            bird_translated_name_polish=bird_translated_name_polish,
+        )
+    except sqlExc.IntegrityError as e:
+        raise HTTPException(
+            409,
+            detail="Bird already exists.",
+        )
 
     # Then we save image
     image_extension = bird_image_file.filename.split(".")[-1]
@@ -68,4 +84,4 @@ async def add_bird(
         path=sound_path, output_name=sound_out_file_name, in_file=bird_sound_file
     )
 
-    return {"message": "Bird added"}
+    return {"detail": "Bird added"}

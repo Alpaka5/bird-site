@@ -47,12 +47,29 @@ def get_bird_text_field(db: Session, bird_latin_name: str, language_id: str):
     ).first()
 
 
-def add_bird(
+def add_bird_full(
     db: Session,
     bird: schemas.Bird,
+    bird_description_data: schemas.BirdTextField,
+    bird_translated_name_english: schemas.BirdTranslatedName,
+    bird_translated_name_polish: schemas.BirdTranslatedName,
 ):
     bird_model = models.Bird(**bird.model_dump())
     db.add(bird_model)
+
+    bird_description_model = models.BirdTextField(**bird_description_data.model_dump())
+    db.add(bird_description_model)
+
+    bird_translated_name_english_model = models.BirdNameTranslation(
+        **bird_translated_name_english.model_dump()
+    )
+    db.add(bird_translated_name_english_model)
+
+    bird_translated_name_polish_model = models.BirdNameTranslation(
+        **bird_translated_name_polish.model_dump()
+    )
+    db.add(bird_translated_name_polish_model)
+
     db.commit()
-    db.refresh(bird_model)
-    return bird_model
+
+    return True

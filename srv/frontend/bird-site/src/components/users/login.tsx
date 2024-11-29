@@ -15,6 +15,8 @@ export default function Login() {
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: JSON.stringify(`grant_type=password&username=${email}&password=${password}&scope=&client_id=&client_secret=`)
         };
+        console.log("REQUEST OPTIONS!")
+        console.log(requestOptions);
         const response = await fetch("http://localhost:5000/users/token", requestOptions);
         const data = await response.json();
         if (!response.ok) {

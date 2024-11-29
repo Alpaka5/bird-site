@@ -57,3 +57,4 @@ npx shadcn@latest add command
 npx shadcn@latest add button
 npx shadcn@latest add dropdown-menu
 npx shadcn@latest add avatar
+npm install react-hook-form

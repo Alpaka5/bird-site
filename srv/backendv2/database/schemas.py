@@ -45,6 +45,30 @@ class BirdTextField(BaseModel):
         from_attributes = True
 
 
+class BirdTextFieldUpload(BirdTextField):
+    @model_validator(mode="before")
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
+
+
+class BirdTranslatedName(BaseModel):
+    bird: str
+    language: str
+    name: str
+
+
+class BirdTranslatedNameUpload(BirdTranslatedName):
+    @model_validator(mode="before")
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
+
+
 class _UserBase(BaseModel):
     email: str
     username: str
