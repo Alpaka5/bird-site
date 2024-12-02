@@ -54,7 +54,7 @@ class QuizGame:
             length_min_mm=bird.length_min_mm,
             length_max_mm=bird.length_max_mm,
             weight_min_g=bird.weight_min_g,
-            weight_max_g=bird.weight_min_g,
+            weight_max_g=bird.weight_max_g,
             family=bird.family,
             order=bird.family_rel.suborder_rel.order_rel.latin_name,
             suborder=bird.family_rel.suborder_rel.latin_name,

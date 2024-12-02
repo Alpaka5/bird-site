@@ -49,6 +49,8 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
     const [birdDescription, setBirdDescription] = useState(() => {
     });
 
+    const [wasPlayed, setWasPlayed] = useState(false);
+
     function checkCorrectAnswer(event: MouseEvent, bird: birdDetailed) {
         if (!quizAnswered) {
             for (const single_bird of quizGame.birds) {
@@ -93,18 +95,20 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
     }
 
     function startNewQuiz(event) {
+        setWasPlayed(false);
+
+        let quizBirdSound = document.getElementById("quiz_bird_sound");
+
         quizQuery.refetch();
 
-        let quizBirdSound: HTMLElement = document.getElementById("quiz_bird_sound")
-        quizBirdSound.load()
 
         let quizBirdDescription = document.getElementById("quiz-bird-description");
 
         quizBirdDescription.classList.replace("quiz-description", "quiz-description-hidden");
 
         setTimeout(function () {
-                quizBirdDescription.classList.add("hidden");
-            }, 400);
+            quizBirdDescription.classList.add("hidden");
+        }, 400);
         event.currentTarget.style.visibility = "hidden";
 
         event.currentTarget.style.opacity = 0;
@@ -120,17 +124,12 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
         }
 
         setTimeout(function () {
-            quizBirdSound.load()
-
-        }, 500);
+            event.currentTarget.currentTime = 3;
+        }, 1200);
 
         setTimeout(function () {
-            while (quizBirdSound.currentTime != 3){
-                console.log("PENTLA")
-                quizBirdSound.currentTime = 3;
-            }
             quizBirdSound.play();
-        }, 1000);
+        }, 1200);
 
     }
 
@@ -147,12 +146,22 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
 
             </div>
 
-            <audio id="quiz_bird_sound" controlsList="nodownload" controls >
-                <source src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird +"#t=3"} />
+            <audio id="quiz_bird_sound" controlsList="nodownload" onPlay={(event) => {
+                console.log(wasPlayed);
+                if (!wasPlayed) {
+                    console.log(event.currentTarget.currentTime);
+                    for (var i=1;i<=10; i++) {
+                        event.currentTarget.currentTime = 3;
+                    }
+                    console.log(event.currentTarget.currentTime);
+
+                    setWasPlayed(true);
+                }
+            }} controls>
+                <source id="quiz_bird_sound_source" src={"http://localhost:5000/birds/sound/" + quizGame.correct_bird}/>
             </audio>
             <button id="new_quiz_button" className="start-new-game-button m-1 "
                     onClick={(e: MouseEvent) => {
-
                         startNewQuiz(e)
                     }}>Start new game
             </button>
@@ -163,6 +172,18 @@ function QuizAnswers({quizQuery}: { quizQuery: UseQueryResult }) {
 
 
 export default function QuizWindow() {
+    setTimeout(function () {
+        let quizBirdSoundSource = document.getElementById("quiz_bird_sound_source");
+
+        new MutationObserver(() => {
+            let quizBirdSound = document.getElementById("quiz_bird_sound");
+            quizBirdSound.pause();
+            quizBirdSound.load();
+            quizBirdSound.currentTime=3;
+        }).observe(quizBirdSoundSource, {attributes: true, attributeFilter: ["src"]});
+        console.log("observer done")
+    }, 2000);
+
 
     const postQuery = useQuery({
         queryKey: ['quiz_game'],
